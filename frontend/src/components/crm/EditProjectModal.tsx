@@ -27,6 +27,7 @@ export default function EditProjectModal({ isOpen, onClose, onSuccess, project }
     e.preventDefault();
     setIsSubmitting(true);
     setError(null);
+    const formData = new FormData(e.currentTarget);
 
     const updatedProject: Project = {
       ...project,
