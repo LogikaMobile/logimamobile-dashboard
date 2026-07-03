@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import useSWR from 'swr';
 import Image from 'next/image';
+import Logo from '../../public/Logo.svg';
 import KpiHeader from '@/components/crm/KpiHeader';
 import FinancialDashboard from '@/components/crm/FinancialDashboard';
 import KanbanPipeline from '@/components/crm/KanbanPipeline';
@@ -30,7 +31,9 @@ export default function Home() {
         <header className="mb-12 flex justify-between items-center border-b border-panel-border pb-6">
           <div>
             <div className="flex items-center gap-5">
-              <Image src="/Logo.svg" alt="LogikaMobile Logo" width={120} height={120} />
+              <div className="bg-black/50 p-4 border border-panel-border rounded-lg inline-block shadow-[0_0_20px_rgba(16,185,129,0.1)]">
+                <Image src={Logo} alt="LogikaMobile Logo" width={120} height={120} />
+              </div>
               <h1 className="text-6xl font-bold tracking-widest">
                 <span className="text-brand-purple">Logika</span><span className="text-brand-orange">Mobile</span>
               </h1>
