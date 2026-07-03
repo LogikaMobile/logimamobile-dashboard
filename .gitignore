@@ -13,13 +13,13 @@ yarn-error.log
 
 # Next.js
 .next/
-out/
-build/
+/out/
+/build/
 
 # Kotlin / Ktor / Gradle
 .gradle/
-build/
-out/
+/build/
+/out/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
