@@ -6,11 +6,15 @@ import { getMonthlyReport, updateExpenseRecord } from '@/lib/api';
 export default function FinancialReportModal({ 
   isOpen, 
   onClose,
-  brandColorClass
+  brandColorClass,
+  currency = 'USD',
+  exchangeRate = 20.00
 }: { 
   isOpen: boolean;
   onClose: () => void;
   brandColorClass: string;
+  currency?: 'USD' | 'MXN';
+  exchangeRate?: number;
 }) {
   const [activeTab, setActiveTab] = useState<'monthly' | 'annual'>('monthly');
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1);
@@ -23,6 +27,11 @@ export default function FinancialReportModal({
   const [editingId, setEditingId] = useState<number | null>(null);
   const [editAmount, setEditAmount] = useState<number>(0);
   const [editNote, setEditNote] = useState<string>('');
+
+  const formatCurrency = (amount: number) => {
+    const convertedAmount = currency === 'MXN' ? amount * (exchangeRate || 20) : amount;
+    return new Intl.NumberFormat('es-MX', { style: 'currency', currency: currency || 'USD' }).format(convertedAmount);
+  };
 
   useEffect(() => {
     if (isOpen && activeTab === 'monthly') {
@@ -141,8 +150,8 @@ export default function FinancialReportModal({
                           {r.isModified && <p className="text-xs text-brand-orange mt-1">¡Modificado! Motivo: {r.modificationNote}</p>}
                         </div>
                         <div className="text-right">
-                          <p className="text-xs text-gray-500 line-through">Proyectado: ${r.originalAmount.toFixed(2)}</p>
-                          <p className={`text-xl font-bold ${r.isModified ? 'text-brand-orange' : 'text-white'}`}>Real: ${r.actualAmount.toFixed(2)}</p>
+                          <p className="text-xs text-gray-500 line-through">Proyectado: {formatCurrency(r.originalAmount)}</p>
+                          <p className={`text-xl font-bold ${r.isModified ? 'text-brand-orange' : 'text-white'}`}>Real: {formatCurrency(r.actualAmount)}</p>
                         </div>
                       </div>
 

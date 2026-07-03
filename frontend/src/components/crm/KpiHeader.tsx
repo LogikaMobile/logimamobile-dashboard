@@ -2,9 +2,9 @@
 import { Project } from '@/types';
 
 export default function KpiHeader({ projects }: { projects: Project[] }) {
-  const leadsCount = projects.filter(p => p.status === 'LEAD').length;
-  const inProgressCount = projects.filter(p => p.status === 'QUOTATION' || p.status === 'NEGOTIATION').length;
-  const wonCount = projects.filter(p => p.status === 'WON').length;
+  const leadsCount = projects.filter(p => p.status === 'STEP_0').length;
+  const inProgressCount = projects.filter(p => ['STEP_1', 'STEP_2', 'STEP_3', 'STEP_4'].includes(p.status)).length;
+  const wonCount = projects.filter(p => ['STEP_5', 'STEP_6', 'STEP_7', 'STEP_8', 'STEP_9', 'STEP_10', 'DELIVERED'].includes(p.status)).length;
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 font-mono">

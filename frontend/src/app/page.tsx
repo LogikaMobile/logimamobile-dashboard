@@ -8,11 +8,14 @@ import FinancialDashboard from '@/components/crm/FinancialDashboard';
 import KanbanPipeline from '@/components/crm/KanbanPipeline';
 import FollowUpList from '@/components/crm/FollowUpList';
 import AddLeadModal from '@/components/crm/AddLeadModal';
+import EditProjectModal from '@/components/crm/EditProjectModal';
 import { fetchProjects, fetchConstantExpenses } from '@/lib/api';
 import Logo from '../../public/Logo.svg';
 
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [selectedProject, setSelectedProject] = useState<any>(null);
   const { data: projects, error, mutate } = useSWR('projects', fetchProjects, {
     fallbackData: [],
     revalidateOnFocus: false
@@ -70,7 +73,13 @@ export default function Home() {
                 <KanbanPipeline projects={projects || []} />
               </div>
               <div className="xl:col-span-1">
-                <FollowUpList projects={projects || []} />
+                <FollowUpList 
+                  projects={projects || []} 
+                  onEditProject={(p) => {
+                    setSelectedProject(p);
+                    setIsEditModalOpen(true);
+                  }}
+                />
               </div>
             </div>
           </>
@@ -80,6 +89,15 @@ export default function Home() {
           isOpen={isModalOpen} 
           onClose={() => setIsModalOpen(false)} 
           onSuccess={() => mutate()} 
+        />
+        <EditProjectModal 
+          isOpen={isEditModalOpen} 
+          onClose={() => {
+            setIsEditModalOpen(false);
+            setSelectedProject(null);
+          }} 
+          onSuccess={() => mutate()} 
+          project={selectedProject} 
         />
       </div>
     </main>

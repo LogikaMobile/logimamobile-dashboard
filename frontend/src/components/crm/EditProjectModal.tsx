@@ -46,9 +46,18 @@ export default function EditProjectModal({ isOpen, onClose, onSuccess, project }
       projectType: formData.get('projectType') as any || undefined,
       recurringRevenue: Number(formData.get('recurringRevenue')) || undefined,
       recurringFrequency: formData.get('recurringFrequency') as any || undefined,
+      
+      billingYear: Number(formData.get('billingYear')) || undefined,
+      completionYear: Number(formData.get('completionYear')) || undefined,
 
       projectNotes: formData.get('projectNotes') as string,
     };
+    
+    // Add time if lastContactDate is modified
+    const rawLastContact = formData.get('lastContactDate') as string;
+    if (rawLastContact) {
+      updatedProject.lastContactDate = rawLastContact.includes('T') ? rawLastContact : `${rawLastContact}T12:00:00Z`;
+    }
 
     try {
       await updateProject(project.id, updatedProject);
@@ -140,6 +149,10 @@ export default function EditProjectModal({ isOpen, onClose, onSuccess, project }
                   </select>
                 </div>
               </div>
+              <div>
+                <label className="block text-xs font-bold text-gray-400 mb-2 uppercase tracking-widest">Último Contacto</label>
+                <input required name="lastContactDate" type="date" defaultValue={project.lastContactDate ? project.lastContactDate.substring(0, 10) : ''} className="w-full p-3 bg-black/50 border border-panel-border rounded text-white focus:border-brand-primary focus:ring-1 focus:ring-brand-primary outline-none transition-all placeholder-gray-600" />
+              </div>
             </div>
 
             {/* Sección Financiera */}
@@ -205,6 +218,17 @@ export default function EditProjectModal({ isOpen, onClose, onSuccess, project }
                   </div>
                 </div>
 
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+                <div>
+                  <label className="block text-xs font-bold text-brand-purple mb-2 uppercase tracking-widest">Año de Facturación</label>
+                  <input name="billingYear" type="number" defaultValue={project.billingYear || new Date().getFullYear()} className="w-full p-3 bg-black/50 border border-panel-border rounded text-white focus:border-brand-purple focus:ring-1 focus:ring-brand-purple outline-none transition-all placeholder-gray-700" placeholder="Ej. 2025" />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-brand-purple mb-2 uppercase tracking-widest">Año de Finalización</label>
+                  <input name="completionYear" type="number" defaultValue={project.completionYear || ""} className="w-full p-3 bg-black/50 border border-panel-border rounded text-white focus:border-brand-purple focus:ring-1 focus:ring-brand-purple outline-none transition-all placeholder-gray-700" placeholder="Ej. 2025" />
+                </div>
               </div>
             </div>
 

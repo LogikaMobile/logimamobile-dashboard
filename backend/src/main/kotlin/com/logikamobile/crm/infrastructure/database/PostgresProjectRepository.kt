@@ -33,6 +33,9 @@ class PostgresProjectRepository : ProjectRepositoryPort {
         recurringFrequency = row[ProjectsTable.recurringFrequency],
         isSetupFeeFirstHalfPaid = row[ProjectsTable.isSetupFeeFirstHalfPaid],
         isSetupFeeSecondHalfPaid = row[ProjectsTable.isSetupFeeSecondHalfPaid],
+        
+        billingYear = row[ProjectsTable.billingYear],
+        completionYear = row[ProjectsTable.completionYear],
 
         projectNotes = row[ProjectsTable.projectNotes]
     )
@@ -62,6 +65,9 @@ class PostgresProjectRepository : ProjectRepositoryPort {
             it[recurringFrequency] = project.recurringFrequency
             it[isSetupFeeFirstHalfPaid] = project.isSetupFeeFirstHalfPaid
             it[isSetupFeeSecondHalfPaid] = project.isSetupFeeSecondHalfPaid
+            
+            it[billingYear] = project.billingYear
+            it[completionYear] = project.completionYear
 
             it[projectNotes] = project.projectNotes
         }
@@ -104,6 +110,9 @@ class PostgresProjectRepository : ProjectRepositoryPort {
             it[recurringFrequency] = project.recurringFrequency
             it[isSetupFeeFirstHalfPaid] = project.isSetupFeeFirstHalfPaid
             it[isSetupFeeSecondHalfPaid] = project.isSetupFeeSecondHalfPaid
+            
+            it[billingYear] = project.billingYear
+            it[completionYear] = project.completionYear
 
             it[projectNotes] = project.projectNotes
         }

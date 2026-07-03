@@ -13,9 +13,20 @@ export default function FinancialDashboard({
   constantExpenses: ConstantExpense[],
   onExpensesChanged: () => void 
 }) {
-  const generatedRevenue = projects.reduce((acc, p) => acc + (Number(p.generatedRevenue) || 0), 0);
-  const projectedRevenue = projects.reduce((acc, p) => acc + (Number(p.projectedRevenue) || 0), 0);
-  const operationalCosts = projects.reduce((acc, p) => acc + (Number(p.operationalCosts) || 0), 0);
+  const currentYear = new Date().getFullYear();
+  const [selectedYear, setSelectedYear] = useState<number>(currentYear);
+  const [currency, setCurrency] = useState<'USD' | 'MXN'>('USD');
+  const [exchangeRate, setExchangeRate] = useState<number>(20.00);
+
+  const filteredProjects = projects.filter(p => {
+    const pYear = p.billingYear || currentYear;
+    return pYear === selectedYear;
+  });
+
+  const generatedRevenue = filteredProjects.reduce((acc, p) => acc + (Number(p.generatedRevenue) || 0), 0);
+  const projectedRevenue = filteredProjects.reduce((acc, p) => acc + (Number(p.projectedRevenue) || 0), 0);
+  const operationalCosts = filteredProjects.reduce((acc, p) => acc + (Number(p.operationalCosts) || 0), 0);
+  
   const constantIncomesMonthly = constantExpenses
     .filter(e => e.type === 'INCOME')
     .reduce((acc, e) => {
@@ -52,20 +63,18 @@ export default function FinancialDashboard({
       return acc + e.amount;
     }, 0);
   
-  // Cálculo de ROI
   const totalRevenue = generatedRevenue + projectedRevenue + constantIncomesAnnual;
   
-  // ROI Anualizado (Asume que los ingresos y costos operativos son del año)
   const totalCostsAnnual = operationalCosts + constantExpensesAnnual;
   const roiAnnual = totalCostsAnnual > 0 ? ((totalRevenue - totalCostsAnnual) / totalCostsAnnual) * 100 : 0;
 
-  // ROI Mensualizado (Ingresos y costos operativos se dividen entre 12)
   const totalCostsMonthly = (operationalCosts / 12) + constantExpensesMonthly;
   const revenueMonthly = (totalRevenue / 12) + constantIncomesMonthly;
   const roiMonthly = totalCostsMonthly > 0 ? ((revenueMonthly - totalCostsMonthly) / totalCostsMonthly) * 100 : 0;
 
   const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(amount);
+    const convertedAmount = currency === 'MXN' ? amount * exchangeRate : amount;
+    return new Intl.NumberFormat('es-MX', { style: 'currency', currency: currency }).format(convertedAmount);
   };
 
   const [modalConfig, setModalConfig] = useState<{
@@ -94,14 +103,44 @@ export default function FinancialDashboard({
   return (
     <>
       <div className="bg-panel-bg p-8 rounded border border-panel-border mb-8 font-mono relative">
-        <div className="flex justify-between items-start mb-8">
+        <div className="flex justify-between items-center mb-8">
           <h2 className="text-xl font-bold tracking-widest text-brand-purple uppercase">/ DASHBOARD_FINANCIERO</h2>
-          <button 
-            onClick={() => setIsReportOpen(true)}
-            className="px-4 py-2 border border-brand-primary text-brand-primary font-bold text-sm tracking-widest uppercase hover:bg-brand-primary hover:text-white transition-colors"
-          >
-            [ Reporte Financiero ]
-          </button>
+          <div className="flex gap-4 items-center">
+            <select 
+              value={selectedYear} 
+              onChange={(e) => setSelectedYear(Number(e.target.value))}
+              className="p-2 bg-black/50 border border-brand-purple rounded text-brand-purple font-mono text-xs uppercase tracking-widest focus:outline-none focus:ring-1 focus:ring-brand-purple appearance-none cursor-pointer"
+            >
+              {[currentYear - 2, currentYear - 1, currentYear, currentYear + 1, currentYear + 2].map(year => (
+                <option key={year} value={year}>{year}</option>
+              ))}
+            </select>
+            <div className="flex items-center gap-2 bg-black/50 border border-brand-purple rounded p-1">
+              <select 
+                value={currency} 
+                onChange={(e) => setCurrency(e.target.value as 'USD' | 'MXN')}
+                className="bg-transparent text-brand-purple font-mono text-xs uppercase tracking-widest focus:outline-none appearance-none cursor-pointer px-2"
+              >
+                <option value="USD">USD</option>
+                <option value="MXN">MXN</option>
+              </select>
+              {currency === 'MXN' && (
+                <input 
+                  type="number" 
+                  value={exchangeRate}
+                  onChange={(e) => setExchangeRate(Number(e.target.value))}
+                  className="w-16 bg-transparent border-l border-brand-purple/50 pl-2 text-brand-purple font-mono text-xs focus:outline-none"
+                  step="0.01"
+                />
+              )}
+            </div>
+            <button  
+              onClick={() => setIsReportOpen(true)}
+              className="px-4 py-2 border border-brand-primary text-brand-primary font-bold text-sm tracking-widest uppercase hover:bg-brand-primary hover:text-white transition-colors"
+            >
+              [ Reporte Financiero ]
+            </button>
+          </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
           <div 
@@ -158,15 +197,19 @@ export default function FinancialDashboard({
         title={modalConfig.title}
         type={modalConfig.type}
         brandColorClass={modalConfig.brandColorClass}
-        projects={projects}
+        projects={filteredProjects}
         constantExpenses={constantExpenses}
         onExpensesChanged={onExpensesChanged}
+        currency={currency}
+        exchangeRate={exchangeRate}
       />
 
       <FinancialReportModal 
         isOpen={isReportOpen}
         onClose={() => setIsReportOpen(false)}
         brandColorClass="brand-primary"
+        currency={currency}
+        exchangeRate={exchangeRate}
       />
     </>
   );

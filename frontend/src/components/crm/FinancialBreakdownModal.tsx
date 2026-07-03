@@ -12,6 +12,8 @@ interface FinancialBreakdownModalProps {
   constantExpenses?: ConstantExpense[];
   onExpensesChanged?: () => void;
   brandColorClass: string;
+  currency?: 'USD' | 'MXN';
+  exchangeRate?: number;
 }
 
 export default function FinancialBreakdownModal({ 
@@ -22,7 +24,9 @@ export default function FinancialBreakdownModal({
   projects = [], 
   constantExpenses = [],
   onExpensesChanged,
-  brandColorClass
+  brandColorClass,
+  currency = 'USD',
+  exchangeRate = 20.00
 }: FinancialBreakdownModalProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [newConcept, setNewConcept] = useState('');
@@ -34,7 +38,8 @@ export default function FinancialBreakdownModal({
   if (!isOpen) return null;
 
   const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(amount);
+    const convertedAmount = currency === 'MXN' ? amount * exchangeRate : amount;
+    return new Intl.NumberFormat('es-MX', { style: 'currency', currency: currency }).format(convertedAmount);
   };
 
   const handleAddExpense = async (e: React.FormEvent) => {

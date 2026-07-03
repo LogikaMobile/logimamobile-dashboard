@@ -1,7 +1,7 @@
 'use client';
 import { Project } from '@/types';
 
-export default function FollowUpList({ projects }: { projects: Project[] }) {
+export default function FollowUpList({ projects, onEditProject }: { projects: Project[], onEditProject: (p: Project) => void }) {
   const activeProjects = projects
     .filter(p => !['WON', 'LOST'].includes(p.status))
     .sort((a, b) => new Date(b.lastContactDate).getTime() - new Date(a.lastContactDate).getTime())
@@ -15,11 +15,16 @@ export default function FollowUpList({ projects }: { projects: Project[] }) {
           <p className="text-sm text-gray-500 uppercase tracking-widest">/ SIN_SEGUIMIENTOS</p>
         )}
         {activeProjects.map((project) => (
-          <div key={project.id} className="flex flex-col border-l-2 border-brand-orange pl-4 py-2 bg-black/40 hover:bg-black/60 transition-colors">
+          <div 
+            key={project.id} 
+            onClick={() => onEditProject(project)}
+            className="flex flex-col border-l-2 border-brand-orange pl-4 py-2 bg-black/40 hover:bg-black/60 transition-colors cursor-pointer"
+          >
             <span className="font-bold text-white uppercase">{project.companyName}</span>
             <span className="text-sm text-gray-400 mt-1">{project.contactName} // {project.contactChannel}</span>
-            <span className="text-xs text-brand-primary mt-2 uppercase tracking-widest">
+            <span className="text-xs text-brand-primary mt-2 uppercase tracking-widest group">
               [ ÚLTIMO_CONTACTO: {new Date(project.lastContactDate).toLocaleDateString()} ]
+              <span className="ml-2 text-brand-orange opacity-0 group-hover:opacity-100 transition-opacity">✏️</span>
             </span>
           </div>
         ))}

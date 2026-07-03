@@ -63,6 +63,10 @@ object ProjectsTable : UUIDTable("projects") {
     val recurringFrequency = varchar("recurring_frequency", 50).nullable() // MONTHLY or ANNUAL
     val isSetupFeeFirstHalfPaid = bool("is_setup_fee_first_half_paid").default(false)
     val isSetupFeeSecondHalfPaid = bool("is_setup_fee_second_half_paid").default(false)
+    
+    // Filtros de reportes
+    val billingYear = integer("billing_year").nullable()
+    val completionYear = integer("completion_year").nullable()
 
     
     // Contexto (jsonb para queries analíticas en PostgreSQL)

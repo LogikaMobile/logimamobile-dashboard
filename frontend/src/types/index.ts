@@ -23,6 +23,8 @@ export interface Project {
   isSetupFeeSecondHalfPaid?: boolean;
 
   projectNotes?: string;
+  billingYear?: number;
+  completionYear?: number;
 }
 
 export type CreateProjectDto = Omit<Project, 'id'>;

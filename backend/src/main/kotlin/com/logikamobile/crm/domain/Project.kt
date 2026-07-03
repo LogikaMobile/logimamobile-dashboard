@@ -73,5 +73,8 @@ data class Project(
     val isSetupFeeFirstHalfPaid: Boolean = false,
     val isSetupFeeSecondHalfPaid: Boolean = false,
     
+    val billingYear: Int? = null,
+    val completionYear: Int? = null,
+    
     val projectNotes: String? = null // Jsonb stored as string in domain for simplicity, parsed when needed
 )
