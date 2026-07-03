@@ -9,6 +9,7 @@ import KanbanPipeline from '@/components/crm/KanbanPipeline';
 import FollowUpList from '@/components/crm/FollowUpList';
 import AddLeadModal from '@/components/crm/AddLeadModal';
 import { fetchProjects, fetchConstantExpenses } from '@/lib/api';
+import Logo from '../../public/Logo.svg';
 
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -30,7 +31,7 @@ export default function Home() {
         <header className="mb-12 flex justify-between items-center border-b border-panel-border pb-6">
           <div>
             <div className="flex items-center gap-5">
-              <Image src="/Logo.svg" alt="LogikaMobile Logo" width={120} height={120} />
+              <Image src={Logo} alt="LogikaMobile Logo" width={120} height={120} />
               <h1 className="text-6xl font-bold tracking-widest">
                 <span className="text-brand-purple">Logika</span><span className="text-brand-orange">Mobile</span>
               </h1>
