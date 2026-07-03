@@ -1,0 +1,22 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-background: #050505;
+  --color-foreground: #e5e5e5;
+  
+  /* LogikaMobile Corporate Colors */
+  --color-brand-black: #000000;
+  --color-brand-purple: #7B2CBF;
+  --color-brand-orange: #FF7A00;
+  --color-brand-primary: #10b981;
+  --color-brand-secondary: #059669;
+  
+  --color-panel-bg: #111111;
+  --color-panel-border: #222222;
+}
+
+body {
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
