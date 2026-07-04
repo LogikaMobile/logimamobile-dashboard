@@ -25,8 +25,8 @@ export default function FinancialDashboard({
 
   const generatedRevenue = filteredProjects.reduce((acc, p) => acc + (Number(p.generatedRevenue) || 0), 0);
   
-  // Proyectados = solo proyectos ABIERTOS
-  const openProjects = filteredProjects.filter(p => p.status !== 'DELIVERED' && p.status !== 'LOST');
+  // Proyectados = solo proyectos ABIERTOS (excluye Entregado, Perdido y Producción)
+  const openProjects = filteredProjects.filter(p => p.status !== 'DELIVERED' && p.status !== 'LOST' && p.status !== 'STEP_10');
   const projectedRevenue = openProjects.reduce((acc, p) => {
     // Si projectedRevenue es 0 (por registros viejos), calculamos al vuelo
     const proj = Number(p.projectedRevenue) || (Number(p.quotedPrice || 0) - Number(p.counterOfferPrice || 0));
@@ -75,8 +75,8 @@ export default function FinancialDashboard({
   const totalRevenue = filteredProjects.reduce((acc, p) => {
     const gen = Number(p.generatedRevenue) || 0;
     
-    // Si está cerrado, su valor es lo que se generó.
-    if (p.status === 'DELIVERED' || p.status === 'LOST') {
+    // Si está cerrado o en Producción, su valor es lo que se generó.
+    if (p.status === 'DELIVERED' || p.status === 'LOST' || p.status === 'STEP_10') {
       return acc + gen;
     }
     
