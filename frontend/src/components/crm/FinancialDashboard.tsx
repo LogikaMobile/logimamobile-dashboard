@@ -120,6 +120,12 @@ export default function FinancialDashboard({
     });
   };
 
+  const getValueClassName = (amount: number) => {
+    const strLen = formatCurrency(amount).length;
+    if (strLen > 12) return "text-lg xl:text-xl font-bold text-white relative z-10 whitespace-nowrap overflow-hidden text-ellipsis";
+    return "text-2xl xl:text-3xl font-bold text-white relative z-10 whitespace-nowrap overflow-hidden text-ellipsis";
+  };
+
   return (
     <>
       <div className="bg-panel-bg p-8 rounded border border-panel-border mb-8 font-mono relative">
