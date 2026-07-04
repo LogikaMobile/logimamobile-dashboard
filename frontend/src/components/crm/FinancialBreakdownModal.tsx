@@ -201,9 +201,17 @@ export default function FinancialBreakdownModal({
               ) : (
                 projects.map(project => {
                   let amount = 0;
-                  if (type === 'REVENUE_GENERATED') amount = Number(project.generatedRevenue) || 0;
-                  if (type === 'REVENUE_PROJECTED') amount = Number(project.projectedRevenue) || 0;
-                  if (type === 'OPERATIONAL_COSTS') amount = Number(project.operationalCosts) || 0;
+                  if (type === 'REVENUE_GENERATED') {
+                    amount = Number(project.generatedRevenue) || 0;
+                  }
+                  if (type === 'REVENUE_PROJECTED') {
+                    const proj = Number(project.projectedRevenue) || 0;
+                    const gen = Number(project.generatedRevenue) || 0;
+                    amount = Math.max(0, proj - gen);
+                  }
+                  if (type === 'OPERATIONAL_COSTS') {
+                    amount = Number(project.operationalCosts) || 0;
+                  }
                   
                   if (amount === 0) return null;
 

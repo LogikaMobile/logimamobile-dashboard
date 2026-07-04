@@ -24,7 +24,12 @@ export default function FinancialDashboard({
   });
 
   const generatedRevenue = filteredProjects.reduce((acc, p) => acc + (Number(p.generatedRevenue) || 0), 0);
-  const projectedRevenue = filteredProjects.reduce((acc, p) => acc + (Number(p.projectedRevenue) || 0), 0);
+  // Pendiente por cobrar (Proyectado - Generado)
+  const pendingRevenue = filteredProjects.reduce((acc, p) => {
+    const proj = Number(p.projectedRevenue) || 0;
+    const gen = Number(p.generatedRevenue) || 0;
+    return acc + Math.max(0, proj - gen);
+  }, 0);
   const operationalCosts = filteredProjects.reduce((acc, p) => acc + (Number(p.operationalCosts) || 0), 0);
   
   const constantIncomesMonthly = constantExpenses
@@ -63,7 +68,12 @@ export default function FinancialDashboard({
       return acc + e.amount;
     }, 0);
   
-  const totalRevenue = generatedRevenue + projectedRevenue + constantIncomesAnnual;
+  // El revenue total de la empresa es lo que ya cobramos + lo que falta por cobrar
+  const totalRevenue = filteredProjects.reduce((acc, p) => {
+    const proj = Number(p.projectedRevenue) || 0;
+    const gen = Number(p.generatedRevenue) || 0;
+    return acc + Math.max(proj, gen); // Evita duplicar ingresos si se capturaron ambos
+  }, 0) + constantIncomesAnnual;
   
   const totalCostsAnnual = operationalCosts + constantExpensesAnnual;
   const roiAnnual = totalCostsAnnual > 0 ? ((totalRevenue - totalCostsAnnual) / totalCostsAnnual) * 100 : 0;
@@ -153,12 +163,12 @@ export default function FinancialDashboard({
           </div>
           
           <div 
-            onClick={() => handleCardClick('Ingresos Proyectados', 'REVENUE_PROJECTED', 'brand-purple')}
+            onClick={() => handleCardClick('Ingresos Pendientes', 'REVENUE_PROJECTED', 'brand-purple')}
             className="p-5 border-l-4 border-brand-purple bg-black/40 hover:bg-black/60 cursor-pointer transition-colors group relative overflow-hidden"
           >
             <div className="absolute inset-0 bg-brand-purple/5 translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-300 ease-out" />
-            <p className="text-xs text-brand-purple uppercase tracking-widest mb-2 relative z-10">Ingresos_Proyectados</p>
-            <p className="text-3xl font-bold text-white relative z-10">{formatCurrency(projectedRevenue)}</p>
+            <p className="text-xs text-brand-purple uppercase tracking-widest mb-2 relative z-10">Ingresos_Pendientes</p>
+            <p className="text-3xl font-bold text-white relative z-10">{formatCurrency(pendingRevenue)}</p>
           </div>
           
           <div 
