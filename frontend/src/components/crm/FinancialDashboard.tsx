@@ -120,12 +120,6 @@ export default function FinancialDashboard({
     });
   };
 
-  const getValueClassName = (amount: number) => {
-    const strLen = formatCurrency(amount).length;
-    if (strLen > 12) return "text-lg xl:text-xl font-bold text-white relative z-10 whitespace-nowrap overflow-hidden text-ellipsis";
-    return "text-2xl xl:text-3xl font-bold text-white relative z-10 whitespace-nowrap overflow-hidden text-ellipsis";
-  };
-
   return (
     <>
       <div className="bg-panel-bg p-8 rounded border border-panel-border mb-8 font-mono relative">
@@ -175,7 +169,7 @@ export default function FinancialDashboard({
           >
             <div className="absolute inset-0 bg-brand-primary/5 translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-300 ease-out" />
             <p className="text-xs text-brand-primary uppercase tracking-widest mb-2 relative z-10">Ingresos_Generados</p>
-            <p className={getValueClassName(generatedRevenue)}>{formatCurrency(generatedRevenue)}</p>
+            <p className="text-xl 2xl:text-2xl font-bold text-white relative z-10 tracking-tight">{formatCurrency(generatedRevenue)}</p>
           </div>
           
           <div 
@@ -184,7 +178,7 @@ export default function FinancialDashboard({
           >
             <div className="absolute inset-0 bg-brand-purple/5 translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-300 ease-out" />
             <p className="text-xs text-brand-purple uppercase tracking-widest mb-2 relative z-10">Ingresos_Proyectados</p>
-            <p className={getValueClassName(projectedRevenue)}>{formatCurrency(projectedRevenue)}</p>
+            <p className="text-xl 2xl:text-2xl font-bold text-white relative z-10 tracking-tight">{formatCurrency(projectedRevenue)}</p>
           </div>
           
           <div 
@@ -193,7 +187,7 @@ export default function FinancialDashboard({
           >
             <div className="absolute inset-0 bg-red-500/5 translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-300 ease-out" />
             <p className="text-xs text-red-500 uppercase tracking-widest mb-2 relative z-10">Gastos_Operativos</p>
-            <p className={getValueClassName(operationalCosts)}>{formatCurrency(operationalCosts)}</p>
+            <p className="text-xl 2xl:text-2xl font-bold text-white relative z-10 tracking-tight">{formatCurrency(operationalCosts)}</p>
           </div>
           
           <div 
@@ -202,7 +196,7 @@ export default function FinancialDashboard({
           >
             <div className="absolute inset-0 bg-red-500/5 translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-300 ease-out" />
             <p className="text-xs text-red-500 uppercase tracking-widest mb-2 relative z-10">GC_Anualizados</p>
-            <p className={getValueClassName(constantExpensesAnnual)}>{formatCurrency(constantExpensesAnnual)}</p>
+            <p className="text-xl 2xl:text-2xl font-bold text-white relative z-10 tracking-tight">{formatCurrency(constantExpensesAnnual)}</p>
             <p className="text-xs text-gray-400 mt-2 relative z-10">Mensual: {formatCurrency(constantExpensesMonthly)}</p>
           </div>
 
