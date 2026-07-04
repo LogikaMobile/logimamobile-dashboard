@@ -24,7 +24,15 @@ export default function FinancialDashboard({
   });
 
   const generatedRevenue = filteredProjects.reduce((acc, p) => acc + (Number(p.generatedRevenue) || 0), 0);
-  const projectedRevenue = filteredProjects.reduce((acc, p) => acc + (Number(p.projectedRevenue) || 0), 0);
+  
+  // Proyectados = solo proyectos ABIERTOS
+  const openProjects = filteredProjects.filter(p => p.status !== 'DELIVERED' && p.status !== 'LOST');
+  const projectedRevenue = openProjects.reduce((acc, p) => {
+    // Si projectedRevenue es 0 (por registros viejos), calculamos al vuelo
+    const proj = Number(p.projectedRevenue) || (Number(p.quotedPrice || 0) - Number(p.counterOfferPrice || 0));
+    return acc + Math.max(0, proj);
+  }, 0);
+  
   const operationalCosts = filteredProjects.reduce((acc, p) => acc + (Number(p.operationalCosts) || 0), 0);
   
   const constantIncomesMonthly = constantExpenses
@@ -63,11 +71,18 @@ export default function FinancialDashboard({
       return acc + e.amount;
     }, 0);
   
-  // El revenue total de la empresa es lo que ya cobramos + lo que falta por cobrar
+  // El revenue total de la empresa es lo que ya cobramos + el pipeline que nos falta cobrar de los proyectos ABIERTOS
   const totalRevenue = filteredProjects.reduce((acc, p) => {
-    const proj = Number(p.projectedRevenue) || 0;
     const gen = Number(p.generatedRevenue) || 0;
-    return acc + Math.max(proj, gen); // Evita duplicar ingresos si se capturaron ambos
+    
+    // Si está cerrado, su valor es lo que se generó.
+    if (p.status === 'DELIVERED' || p.status === 'LOST') {
+      return acc + gen;
+    }
+    
+    // Si está abierto, su valor es lo mayor entre lo generado y la proyección
+    const proj = Number(p.projectedRevenue) || (Number(p.quotedPrice || 0) - Number(p.counterOfferPrice || 0));
+    return acc + Math.max(proj, gen);
   }, 0) + constantIncomesAnnual;
   
   const totalCostsAnnual = operationalCosts + constantExpensesAnnual;

@@ -205,7 +205,9 @@ export default function FinancialBreakdownModal({
                     amount = Number(project.generatedRevenue) || 0;
                   }
                   if (type === 'REVENUE_PROJECTED') {
-                    amount = Number(project.projectedRevenue) || 0;
+                    if (project.status === 'DELIVERED' || project.status === 'LOST') return null;
+                    amount = Number(project.projectedRevenue) || (Number(project.quotedPrice || 0) - Number(project.counterOfferPrice || 0));
+                    amount = Math.max(0, amount);
                   }
                   if (type === 'OPERATIONAL_COSTS') {
                     amount = Number(project.operationalCosts) || 0;
