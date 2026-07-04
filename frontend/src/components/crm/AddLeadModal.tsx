@@ -24,23 +24,26 @@ export default function AddLeadModal({ isOpen, onClose, onSuccess }: AddLeadModa
     const formData = new FormData(e.currentTarget);
     const now = new Date().toISOString();
 
-    const newLead: CreateProjectDto = {
-      companyName: formData.get('companyName') as string,
-      companySize: formData.get('companySize') as string,
-      industry: formData.get('industry') as string,
-      contactName: formData.get('contactName') as string,
-      contactChannel: formData.get('contactChannel') as string,
-      status: formData.get('status') as string,
-      firstContactDate: now,
-      lastContactDate: now,
-      quotedPrice: Number(formData.get('quotedPrice')) || undefined,
-      counterOfferPrice: Number(formData.get('counterOfferPrice')) || undefined,
-      finalPrice: Number(formData.get('finalPrice')) || undefined,
-      projectedRevenue: Number(formData.get('projectedRevenue')) || 0,
-      operationalCosts: Number(formData.get('operationalCosts')) || 0,
-      generatedRevenue: 0,
+      const quotedPrice = Number(formData.get('quotedPrice')) || 0;
+      const counterOfferPrice = Number(formData.get('counterOfferPrice')) || 0;
       
-      projectType: formData.get('projectType') as any || undefined,
+      const newLead: CreateProjectDto = {
+        companyName: formData.get('companyName') as string,
+        companySize: formData.get('companySize') as string,
+        industry: formData.get('industry') as string,
+        contactName: formData.get('contactName') as string,
+        contactChannel: formData.get('contactChannel') as string,
+        status: formData.get('status') as string,
+        firstContactDate: now,
+        lastContactDate: now,
+        quotedPrice,
+        counterOfferPrice,
+        finalPrice: quotedPrice - counterOfferPrice, // keep finalPrice for reference
+        projectedRevenue: quotedPrice - counterOfferPrice,
+        operationalCosts: Number(formData.get('operationalCosts')) || 0,
+        generatedRevenue: Number(formData.get('generatedRevenue')) || 0,
+        
+        projectType: formData.get('projectType') as any || undefined,
       recurringRevenue: Number(formData.get('recurringRevenue')) || undefined,
       recurringFrequency: formData.get('recurringFrequency') as any || undefined,
 
@@ -181,21 +184,21 @@ export default function AddLeadModal({ isOpen, onClose, onSuccess }: AddLeadModa
                   </div>
                 </div>
                 <div>
-                  <label className="block text-xs font-bold text-brand-purple mb-2 uppercase tracking-widest">Contraoferta</label>
+                  <label className="block text-xs font-bold text-brand-purple mb-2 uppercase tracking-widest">Contraoferta (Descuento)</label>
                   <div className="relative">
                     <span className="absolute left-3 top-3 text-brand-purple/50">$</span>
                     <input name="counterOfferPrice" type="number" step="0.01" className="w-full p-3 pl-8 bg-black/50 border border-panel-border rounded text-white focus:border-brand-purple focus:ring-1 focus:ring-brand-purple outline-none transition-all placeholder-gray-700" placeholder="0.00" />
                   </div>
                 </div>
                 <div>
-                  <label className="block text-xs font-bold text-brand-purple mb-2 uppercase tracking-widest">Ingresos</label>
+                  <label className="block text-xs font-bold text-brand-purple mb-2 uppercase tracking-widest">Ingresos Generados</label>
                   <div className="relative">
                     <span className="absolute left-3 top-3 text-brand-purple/50">$</span>
-                    <input name="projectedRevenue" type="number" step="0.01" className="w-full p-3 pl-8 bg-black/50 border border-panel-border rounded text-white focus:border-brand-purple focus:ring-1 focus:ring-brand-purple outline-none transition-all placeholder-gray-700" placeholder="0.00" />
+                    <input name="generatedRevenue" type="number" step="0.01" className="w-full p-3 pl-8 bg-black/50 border border-panel-border rounded text-white focus:border-brand-purple focus:ring-1 focus:ring-brand-purple outline-none transition-all placeholder-gray-700" placeholder="0.00" />
                   </div>
                 </div>
                 <div>
-                  <label className="block text-xs font-bold text-red-500 mb-2 uppercase tracking-widest">Costos</label>
+                  <label className="block text-xs font-bold text-red-500 mb-2 uppercase tracking-widest">Costos Operativos</label>
                   <div className="relative">
                     <span className="absolute left-3 top-3 text-red-500/50">$</span>
                     <input name="operationalCosts" type="number" step="0.01" className="w-full p-3 pl-8 bg-black/50 border border-panel-border rounded text-white focus:border-red-500 focus:ring-1 focus:ring-red-500 outline-none transition-all placeholder-gray-700" placeholder="0.00" />
