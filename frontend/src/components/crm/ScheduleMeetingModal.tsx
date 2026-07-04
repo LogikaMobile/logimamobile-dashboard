@@ -38,7 +38,10 @@ export default function ScheduleMeetingModal({ isOpen, onClose, project }: Sched
       url.searchParams.append('dates', `${formatGoogleDate(startDate)}/${formatGoogleDate(endDate)}`);
       
       if (project.contactEmail) {
-        url.searchParams.append('add', project.contactEmail);
+        const emails = project.contactEmail.split(',').map(e => e.trim()).filter(e => e);
+        emails.forEach(email => {
+          url.searchParams.append('add', email);
+        });
       }
 
       window.open(url.toString(), '_blank');

@@ -112,8 +112,8 @@ export default function AddLeadModal({ isOpen, onClose, onSuccess }: AddLeadModa
                 <input required name="contactName" type="text" className="w-full p-3 bg-black/50 border border-panel-border rounded text-white focus:border-brand-primary focus:ring-1 focus:ring-brand-primary outline-none transition-all placeholder-gray-600" placeholder="Ej. Juan Pérez" />
               </div>
               <div>
-                <label className="block text-xs font-bold text-gray-400 mb-2 uppercase tracking-widest">Correo del Contacto</label>
-                <input name="contactEmail" type="email" className="w-full p-3 bg-black/50 border border-panel-border rounded text-white focus:border-brand-primary focus:ring-1 focus:ring-brand-primary outline-none transition-all placeholder-gray-600" placeholder="Ej. juan@empresa.com" />
+                <label className="block text-xs font-bold text-gray-400 mb-2 uppercase tracking-widest">Correos (separados por coma)</label>
+                <input name="contactEmail" type="text" className="w-full p-3 bg-black/50 border border-panel-border rounded text-white focus:border-brand-primary focus:ring-1 focus:ring-brand-primary outline-none transition-all placeholder-gray-600" placeholder="Ej. juan@empresa.com, maria@empresa.com" />
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
