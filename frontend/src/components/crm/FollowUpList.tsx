@@ -17,12 +17,12 @@ export default function FollowUpList({ projects, onEditProject }: { projects: Pr
           <div 
             key={project.id} 
             onClick={() => onEditProject(project)}
-            className="flex flex-col border-l-2 border-brand-orange pl-4 py-2 bg-black/40 hover:bg-black/60 transition-colors cursor-pointer"
+            className="flex flex-col border-l-2 border-brand-orange pl-4 py-2 bg-black/40 hover:bg-black/60 transition-colors cursor-pointer group overflow-hidden"
           >
-            <span className="font-bold text-white uppercase">{project.companyName}</span>
-            <span className="text-sm text-gray-400 mt-1">{project.contactName} // {project.contactChannel}</span>
-            <span className="text-xs text-brand-primary mt-2 uppercase tracking-widest group whitespace-nowrap">
-              [ ÚLTIMO_CONTACTO: {new Date(project.lastContactDate).toLocaleDateString()} ]
+            <span className="font-bold text-white uppercase truncate">{project.companyName}</span>
+            <span className="text-sm text-gray-400 mt-1 truncate">{project.contactName} // {project.contactChannel}</span>
+            <span className="text-[11px] text-brand-primary mt-2 uppercase tracking-widest truncate">
+              [ÚLTIMO_CONTACTO: {new Date(project.lastContactDate).toLocaleDateString()}]
               <span className="ml-2 text-brand-orange opacity-0 group-hover:opacity-100 transition-opacity">✏️</span>
             </span>
           </div>
