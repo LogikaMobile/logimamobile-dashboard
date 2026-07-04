@@ -169,7 +169,7 @@ export default function FinancialDashboard({
           >
             <div className="absolute inset-0 bg-brand-primary/5 translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-300 ease-out" />
             <p className="text-xs text-brand-primary uppercase tracking-widest mb-2 relative z-10">Ingresos_Generados</p>
-            <p className="text-3xl font-bold text-white relative z-10">{formatCurrency(generatedRevenue)}</p>
+            <p className="text-2xl xl:text-3xl font-bold text-white relative z-10 break-all sm:break-normal">{formatCurrency(generatedRevenue)}</p>
           </div>
           
           <div 
@@ -178,7 +178,7 @@ export default function FinancialDashboard({
           >
             <div className="absolute inset-0 bg-brand-purple/5 translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-300 ease-out" />
             <p className="text-xs text-brand-purple uppercase tracking-widest mb-2 relative z-10">Ingresos_Proyectados</p>
-            <p className="text-3xl font-bold text-white relative z-10">{formatCurrency(projectedRevenue)}</p>
+            <p className="text-2xl xl:text-3xl font-bold text-white relative z-10 break-all sm:break-normal">{formatCurrency(projectedRevenue)}</p>
           </div>
           
           <div 
@@ -187,7 +187,7 @@ export default function FinancialDashboard({
           >
             <div className="absolute inset-0 bg-red-500/5 translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-300 ease-out" />
             <p className="text-xs text-red-500 uppercase tracking-widest mb-2 relative z-10">Gastos_Operativos</p>
-            <p className="text-3xl font-bold text-white relative z-10">{formatCurrency(operationalCosts)}</p>
+            <p className="text-2xl xl:text-3xl font-bold text-white relative z-10 break-all sm:break-normal">{formatCurrency(operationalCosts)}</p>
           </div>
           
           <div 
@@ -196,16 +196,16 @@ export default function FinancialDashboard({
           >
             <div className="absolute inset-0 bg-red-500/5 translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-300 ease-out" />
             <p className="text-xs text-red-500 uppercase tracking-widest mb-2 relative z-10">GC_Anualizados</p>
-            <p className="text-3xl font-bold text-white relative z-10">{formatCurrency(constantExpensesAnnual)}</p>
+            <p className="text-2xl xl:text-3xl font-bold text-white relative z-10 break-all sm:break-normal">{formatCurrency(constantExpensesAnnual)}</p>
             <p className="text-xs text-gray-400 mt-2 relative z-10">Mensual: {formatCurrency(constantExpensesMonthly)}</p>
           </div>
 
           <div className="p-5 border-l-4 border-brand-orange bg-black/40">
             <p className="text-xs text-brand-orange uppercase tracking-widest mb-2">ROI_Anual</p>
-            <p className="text-3xl font-bold text-white mb-2">{roiAnnual.toFixed(0)}%</p>
+            <p className="text-2xl xl:text-3xl font-bold text-white mb-2">{roiAnnual.toFixed(0)}%</p>
             <div className="border-t border-panel-border/50 pt-2 mt-2">
               <p className="text-xs text-brand-orange/70 uppercase tracking-widest">ROI_Mensual</p>
-              <p className="text-xl font-bold text-gray-300">{roiMonthly.toFixed(0)}%</p>
+              <p className="text-lg xl:text-xl font-bold text-gray-300">{roiMonthly.toFixed(0)}%</p>
             </div>
           </div>
         </div>
