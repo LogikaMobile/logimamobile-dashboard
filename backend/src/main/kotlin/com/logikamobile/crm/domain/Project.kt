@@ -40,6 +40,7 @@ data class Project(
     val industry: String? = null,
     
     val contactName: String,
+    val contactEmail: String? = null,
     val contactChannel: String,
     
     val status: String,

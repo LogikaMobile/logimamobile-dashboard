@@ -4,8 +4,7 @@ import { Project } from '@/types';
 export default function FollowUpList({ projects, onEditProject }: { projects: Project[], onEditProject: (p: Project) => void }) {
   const activeProjects = projects
     .filter(p => !['WON', 'LOST'].includes(p.status))
-    .sort((a, b) => new Date(b.lastContactDate).getTime() - new Date(a.lastContactDate).getTime())
-    .slice(0, 5);
+    .sort((a, b) => new Date(b.lastContactDate).getTime() - new Date(a.lastContactDate).getTime());
 
   return (
     <div className="bg-panel-bg p-6 rounded border border-panel-border font-mono h-full">
@@ -22,7 +21,7 @@ export default function FollowUpList({ projects, onEditProject }: { projects: Pr
           >
             <span className="font-bold text-white uppercase">{project.companyName}</span>
             <span className="text-sm text-gray-400 mt-1">{project.contactName} // {project.contactChannel}</span>
-            <span className="text-xs text-brand-primary mt-2 uppercase tracking-widest group">
+            <span className="text-xs text-brand-primary mt-2 uppercase tracking-widest group whitespace-nowrap">
               [ ÚLTIMO_CONTACTO: {new Date(project.lastContactDate).toLocaleDateString()} ]
               <span className="ml-2 text-brand-orange opacity-0 group-hover:opacity-100 transition-opacity">✏️</span>
             </span>

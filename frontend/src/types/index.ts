@@ -4,6 +4,7 @@ export interface Project {
   companySize?: string;
   industry?: string;
   contactName: string;
+  contactEmail?: string;
   contactChannel: string;
   status: string; // 'LEAD', 'QUOTATION', 'NEGOTIATION', 'WON', 'LOST'
   firstContactDate: string;

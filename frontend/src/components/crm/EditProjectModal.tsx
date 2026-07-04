@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { X } from 'lucide-react';
+import { X, Calendar as CalendarIcon } from 'lucide-react';
 import { Project } from '@/types';
 import { updateProject } from '@/lib/api';
+import ScheduleMeetingModal from './ScheduleMeetingModal';
 
 interface EditProjectModalProps {
   isOpen: boolean;
@@ -14,6 +15,7 @@ export default function EditProjectModal({ isOpen, onClose, onSuccess, project }
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [projectType, setProjectType] = useState<string>('');
+  const [isScheduleMeetingOpen, setIsScheduleMeetingOpen] = useState(false);
 
   useEffect(() => {
     if (project) {
@@ -38,6 +40,7 @@ export default function EditProjectModal({ isOpen, onClose, onSuccess, project }
       companySize: formData.get('companySize') as string,
       industry: formData.get('industry') as string,
       contactName: formData.get('contactName') as string,
+      contactEmail: formData.get('contactEmail') as string || undefined,
       contactChannel: formData.get('contactChannel') as string,
       status: formData.get('status') as string,
       quotedPrice,
@@ -119,9 +122,23 @@ export default function EditProjectModal({ isOpen, onClose, onSuccess, project }
             {/* Sección Contacto */}
             <div className="space-y-4">
               <h3 className="text-lg font-bold text-brand-primary border-b border-panel-border pb-2 uppercase tracking-widest">/ DATOS_CONTACTO</h3>
+              <div className="flex justify-between items-end mb-2">
+                <label className="block text-xs font-bold text-gray-400 uppercase tracking-widest">Nombre del Contacto *</label>
+                <button
+                  type="button"
+                  onClick={() => setIsScheduleMeetingOpen(true)}
+                  className="flex items-center gap-2 text-xs font-bold text-brand-primary border border-brand-primary/50 hover:bg-brand-primary/10 px-3 py-1 rounded transition-colors uppercase"
+                >
+                  <CalendarIcon className="w-4 h-4" />
+                  Agendar Reunión
+                </button>
+              </div>
               <div>
-                <label className="block text-xs font-bold text-gray-400 mb-2 uppercase tracking-widest">Nombre del Contacto *</label>
                 <input required name="contactName" type="text" defaultValue={project.contactName} className="w-full p-3 bg-black/50 border border-panel-border rounded text-white focus:border-brand-primary focus:ring-1 focus:ring-brand-primary outline-none transition-all placeholder-gray-600" placeholder="Ej. Juan Pérez" />
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-gray-400 mb-2 uppercase tracking-widest">Correo del Contacto</label>
+                <input name="contactEmail" type="email" defaultValue={project.contactEmail || ''} className="w-full p-3 bg-black/50 border border-panel-border rounded text-white focus:border-brand-primary focus:ring-1 focus:ring-brand-primary outline-none transition-all placeholder-gray-600" placeholder="Ej. juan@empresa.com" />
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
@@ -255,6 +272,12 @@ export default function EditProjectModal({ isOpen, onClose, onSuccess, project }
           </div>
         </form>
       </div>
+
+      <ScheduleMeetingModal 
+        isOpen={isScheduleMeetingOpen}
+        onClose={() => setIsScheduleMeetingOpen(false)}
+        project={project}
+      />
     </div>
   );
 }

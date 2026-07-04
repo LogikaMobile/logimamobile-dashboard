@@ -38,6 +38,7 @@ object ProjectsTable : UUIDTable("projects") {
     
     // Contacto
     val contactName = varchar("contact_name", 255)
+    val contactEmail = varchar("contact_email", 255).nullable()
     val contactChannel = varchar("contact_channel", 50)
     
     // Estado Operativo

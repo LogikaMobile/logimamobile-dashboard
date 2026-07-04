@@ -15,6 +15,7 @@ class PostgresProjectRepository : ProjectRepositoryPort {
         companySize = row[ProjectsTable.companySize],
         industry = row[ProjectsTable.industry],
         contactName = row[ProjectsTable.contactName],
+        contactEmail = row[ProjectsTable.contactEmail],
         contactChannel = row[ProjectsTable.contactChannel],
         status = row[ProjectsTable.status],
         firstContactDate = row[ProjectsTable.firstContactDate],
@@ -47,6 +48,7 @@ class PostgresProjectRepository : ProjectRepositoryPort {
             it[companySize] = project.companySize
             it[industry] = project.industry
             it[contactName] = project.contactName
+            it[contactEmail] = project.contactEmail
             it[contactChannel] = project.contactChannel
             it[status] = project.status
             it[firstContactDate] = project.firstContactDate
@@ -92,6 +94,7 @@ class PostgresProjectRepository : ProjectRepositoryPort {
             it[companySize] = project.companySize
             it[industry] = project.industry
             it[contactName] = project.contactName
+            it[contactEmail] = project.contactEmail
             it[contactChannel] = project.contactChannel
             it[status] = project.status
             it[firstContactDate] = project.firstContactDate
