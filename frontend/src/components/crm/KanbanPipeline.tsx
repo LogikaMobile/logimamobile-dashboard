@@ -108,6 +108,13 @@ export default function KanbanPipeline({ projects }: { projects: Project[] }) {
                     onClick={() => { setSelectedProject(project); setIsEditModalOpen(true); }}
                     className="bg-black/60 p-4 rounded border border-panel-border hover:border-brand-primary hover:shadow-[0_0_15px_rgba(16,185,129,0.15)] transition-all cursor-grab active:cursor-grabbing"
                   >
+                    <div className="mb-2">
+                      {['STEP_0', 'STEP_1', 'STEP_2', 'STEP_3'].includes(project.status) ? (
+                        <span className="text-[10px] font-bold text-gray-400 bg-gray-800 px-2 py-0.5 rounded uppercase tracking-widest">LEAD</span>
+                      ) : (
+                        <span className="text-[10px] font-bold text-black bg-brand-orange px-2 py-0.5 rounded uppercase tracking-widest">PROYECTO</span>
+                      )}
+                    </div>
                     <p className="font-bold text-white uppercase">{project.companyName}</p>
                     <p className="text-xs text-gray-400 mb-2 mt-1">{project.contactName} <span className="text-brand-purple">({project.contactChannel})</span></p>
                     <div className="flex justify-between text-sm mt-3 pt-3 border-t border-panel-border">

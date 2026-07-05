@@ -7,6 +7,8 @@ import com.logikamobile.crm.infrastructure.database.PostgresProjectRepository
 import com.logikamobile.crm.presentation.projectRoutes
 import com.logikamobile.crm.presentation.constantExpenseRoutes
 import com.logikamobile.crm.presentation.financialReportRoutes
+import com.logikamobile.crm.presentation.lmaasRoutes
+import com.logikamobile.crm.infrastructure.database.PostgresLmaasRepository
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpMethod
 import io.ktor.serialization.kotlinx.json.json
@@ -57,9 +59,12 @@ fun Application.module() {
     val reportRepository = com.logikamobile.crm.infrastructure.database.PostgresMonthlyExpenseRecordRepository()
     val financialReportUseCases = com.logikamobile.crm.application.FinancialReportUseCases(reportRepository, expenseRepository)
 
+    val lmaasRepository = PostgresLmaasRepository()
+
     routing {
         projectRoutes(getProjectsUseCase, createProjectUseCase, updateProjectUseCase)
         constantExpenseRoutes(getExpensesUseCase, createExpenseUseCase, deleteExpenseUseCase)
         financialReportRoutes(financialReportUseCases)
+        lmaasRoutes(lmaasRepository)
     }
 }

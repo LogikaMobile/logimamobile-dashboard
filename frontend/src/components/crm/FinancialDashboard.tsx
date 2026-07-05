@@ -1,16 +1,18 @@
 'use client';
 import { useState } from 'react';
-import { Project, ConstantExpense } from '@/types';
+import { Project, ConstantExpense, LmaasLeadWithSubscription } from '@/types';
 import FinancialBreakdownModal from './FinancialBreakdownModal';
 import FinancialReportModal from './FinancialReportModal';
 
 export default function FinancialDashboard({ 
   projects, 
   constantExpenses,
+  lmaasLeads,
   onExpensesChanged
 }: { 
   projects: Project[], 
   constantExpenses: ConstantExpense[],
+  lmaasLeads: LmaasLeadWithSubscription[],
   onExpensesChanged: () => void 
 }) {
   const currentYear = new Date().getFullYear();
@@ -71,7 +73,18 @@ export default function FinancialDashboard({
       return acc + e.amount;
     }, 0);
   
-  // El revenue total de la empresa es lo que ya cobramos + el pipeline que nos falta cobrar de los proyectos ABIERTOS
+  // Ingresos LMaaS Proyectados: Suscripciones en estado STEP_0 a STEP_6
+  const lmaasProjectedRevenue = lmaasLeads
+    .filter(l => ['STEP_0', 'STEP_1', 'STEP_2', 'STEP_3', 'STEP_4', 'STEP_5', 'STEP_6'].includes(l.lead.status))
+    .reduce((acc, l) => acc + Number(l.subscription.annualizedValue), 0);
+
+  // Ingresos LMaaS Generados: suma de generatedRevenue de TODAS las suscripciones
+  const lmaasGeneratedRevenue = lmaasLeads.reduce((acc, l) => acc + Number(l.subscription.generatedRevenue), 0);
+
+  // Costos Operativos LMaaS
+  const lmaasOperatingCosts = lmaasLeads.reduce((acc, l) => acc + Number(l.subscription.operatingCosts), 0);
+  
+  // Modificamos el pipeline original para sumar lo de LMaaS al total (Revenue)
   const totalRevenue = filteredProjects.reduce((acc, p) => {
     const gen = Number(p.generatedRevenue) || 0;
     
@@ -83,9 +96,10 @@ export default function FinancialDashboard({
     // Si está abierto, su valor es lo mayor entre lo generado y la proyección
     const proj = Number(p.projectedRevenue) || (Number(p.quotedPrice || 0) - Number(p.counterOfferPrice || 0));
     return acc + Math.max(proj, gen);
-  }, 0) + constantIncomesAnnual;
+  }, 0) + constantIncomesAnnual + lmaasGeneratedRevenue + lmaasProjectedRevenue;
   
-  const totalCostsAnnual = operationalCosts + constantExpensesAnnual;
+  // Los gastos operativos globales ahora incluyen LMaaS operating costs
+  const totalCostsAnnual = operationalCosts + constantExpensesAnnual + lmaasOperatingCosts;
   const roiAnnual = totalCostsAnnual > 0 ? ((totalRevenue - totalCostsAnnual) / totalCostsAnnual) * 100 : 0;
 
   const totalCostsMonthly = (operationalCosts / 12) + constantExpensesMonthly;
@@ -207,6 +221,24 @@ export default function FinancialDashboard({
               <p className="text-xs text-brand-orange/70 uppercase tracking-widest">ROI_Mensual</p>
               <p className="text-lg xl:text-xl font-bold text-gray-300">{roiMonthly.toFixed(0)}%</p>
             </div>
+          </div>
+        </div>
+        
+        {/* LMAAS FINANCIAL BLOCK */}
+        <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="p-5 border-l-4 border-brand-orange bg-black/40">
+            <p className="text-xs text-brand-orange uppercase tracking-widest mb-2">Ingresos Generados (LMaaS)</p>
+            <p className="text-xl 2xl:text-2xl font-bold text-white tracking-tight">{formatCurrency(lmaasGeneratedRevenue)}</p>
+            <div className="flex gap-4 mt-2">
+              <p className="text-xs text-gray-400">Proyectado: {formatCurrency(lmaasProjectedRevenue)}</p>
+              <p className="text-xs text-gray-400">Neto: {formatCurrency(lmaasGeneratedRevenue - lmaasOperatingCosts)}</p>
+            </div>
+          </div>
+          
+          <div className="p-5 border-l-4 border-red-500 bg-black/40">
+            <p className="text-xs text-red-500 uppercase tracking-widest mb-2">Costos Operativos LMaaS</p>
+            <p className="text-xl 2xl:text-2xl font-bold text-white tracking-tight">{formatCurrency(lmaasOperatingCosts)}</p>
+            <p className="text-xs text-gray-400 mt-2">Costo Directo (Infra Add-ons)</p>
           </div>
         </div>
       </div>

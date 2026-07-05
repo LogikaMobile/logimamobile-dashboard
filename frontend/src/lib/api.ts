@@ -56,15 +56,74 @@ export async function createConstantExpense(data: CreateConstantExpenseDto): Pro
   return res.json();
 }
 
-export async function deleteConstantExpense(id: number): Promise<void> {
-  const res = await fetch(`${API_BASE_URL}/api/expenses/${id}`, {
+export const deleteConstantExpense = async (id: number) => {
+  const res = await fetch(`${API_BASE_URL}/constant-expenses/${id}`, {
     method: 'DELETE',
   });
-  
-  if (!res.ok) {
-    throw new Error('Failed to delete constant expense');
-  }
-}
+  if (!res.ok) throw new Error('Error deleting expense');
+};
+
+export const fetchLmaasLeads = async () => {
+  const res = await fetch(`${API_BASE_URL}/api/v1/lmaas/leads`);
+  if (!res.ok) throw new Error('Failed to fetch LMaaS leads');
+  return res.json();
+};
+
+export const createLmaasLead = async (data: any) => {
+  const res = await fetch(`${API_BASE_URL}/api/v1/lmaas/leads`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  });
+  if (!res.ok) throw new Error('Failed to create LMaaS lead');
+  return res.json();
+};
+
+export const updateLmaasLead = async (id: string, data: any) => {
+  const res = await fetch(`${API_BASE_URL}/api/v1/lmaas/leads/${id}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  });
+  if (!res.ok) throw new Error('Failed to update LMaaS lead');
+  return res.json();
+};
+
+export const updateLmaasSubscription = async (id: string, data: any) => {
+  const res = await fetch(`${API_BASE_URL}/api/v1/lmaas/subscriptions/${id}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  });
+  if (!res.ok) throw new Error('Failed to update LMaaS subscription');
+  return res.json();
+};
+
+export const fetchLmaasTickets = async () => {
+  const res = await fetch(`${API_BASE_URL}/api/v1/lmaas/tickets`);
+  if (!res.ok) throw new Error('Failed to fetch LMaaS tickets');
+  return res.json();
+};
+
+export const createLmaasTicket = async (data: any) => {
+  const res = await fetch(`${API_BASE_URL}/api/v1/lmaas/tickets`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  });
+  if (!res.ok) throw new Error('Failed to create LMaaS ticket');
+  return res.json();
+};
+
+export const updateLmaasTicket = async (id: string, data: any) => {
+  const res = await fetch(`${API_BASE_URL}/api/v1/lmaas/tickets/${id}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  });
+  if (!res.ok) throw new Error('Failed to update LMaaS ticket');
+  return res.json();
+};
 
 export async function getMonthlyReport(year: number, month: number): Promise<MonthlyExpenseRecord[]> {
   const response = await fetch(`${API_BASE_URL}/reports/monthly/${year}/${month}`);

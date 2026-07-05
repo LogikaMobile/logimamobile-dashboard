@@ -52,6 +52,42 @@ export interface MonthlyExpenseRecord {
   modificationNote?: string;
 }
 
+export interface LmaasLead {
+  id: string;
+  companyName: string;
+  contactName: string;
+  emails: string[];
+  status: string; // 'STEP_0' to 'STEP_8'
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface LmaasSubscription {
+  id: string;
+  leadId: string;
+  tier: 'TIER_1' | 'TIER_2' | 'TIER_3';
+  billingCycle: 'MONTHLY' | 'ANNUAL';
+  monthlyFee: number;
+  annualizedValue: number;
+  generatedRevenue: number;
+  operatingCosts: number;
+}
+
+export interface LmaasLeadWithSubscription {
+  lead: LmaasLead;
+  subscription: LmaasSubscription;
+}
+
+export interface LmaasTicket {
+  id: string;
+  subscriptionId: string;
+  title: string;
+  status: 'BACKLOG' | 'DEVELOPMENT' | 'QA' | 'COOLDOWN' | 'DELIVERED';
+  estimatedHours: number;
+  createdAt: string;
+  deliveredAt: string | null;
+}
+
 export interface UpdateExpenseRecordDto {
   actualAmount: number;
   modificationNote: string;

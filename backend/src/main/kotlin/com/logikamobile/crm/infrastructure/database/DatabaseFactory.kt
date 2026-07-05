@@ -24,7 +24,14 @@ object DatabaseFactory {
         
         transaction(database) {
             addLogger(StdOutSqlLogger)
-            SchemaUtils.createMissingTablesAndColumns(ProjectsTable, ConstantExpensesTable, MonthlyExpenseRecordsTable)
+            SchemaUtils.createMissingTablesAndColumns(
+                ProjectsTable, 
+                ConstantExpensesTable, 
+                MonthlyExpenseRecordsTable,
+                LmaasLeadsTable,
+                LmaasSubscriptionsTable,
+                LmaasTicketsTable
+            )
         }
     }
 
