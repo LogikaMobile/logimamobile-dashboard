@@ -6,6 +6,7 @@ import org.jetbrains.exposed.sql.javatime.timestamp
 object LmaasLeadsTable : Table("lmaas_leads") {
     val id = uuid("id")
     val companyName = varchar("company_name", 255)
+    val projectName = varchar("project_name", 255).nullable()
     val contactName = varchar("contact_name", 255)
     val emails = text("emails") // Comma-separated or JSON
     val status = varchar("status", 50)

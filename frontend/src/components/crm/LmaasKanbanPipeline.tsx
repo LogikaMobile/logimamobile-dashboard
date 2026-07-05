@@ -140,6 +140,9 @@ export default function LmaasKanbanPipeline({
                       )}
                     </div>
                     <p className="font-bold text-white uppercase">{item.lead.companyName}</p>
+                    {item.lead.projectName && (
+                      <p className="text-sm font-semibold text-brand-orange mt-1">{item.lead.projectName}</p>
+                    )}
                     <p className="text-xs text-gray-400 mb-2 mt-1">{item.lead.contactName}</p>
                     <div className="flex justify-between text-sm mt-3 pt-3 border-t border-panel-border">
                       <span className="text-brand-orange font-bold">

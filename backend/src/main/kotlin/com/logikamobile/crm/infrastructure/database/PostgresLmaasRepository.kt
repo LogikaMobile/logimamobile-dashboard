@@ -14,6 +14,7 @@ class PostgresLmaasRepository : LmaasRepositoryPort {
     private fun resultRowToLead(row: ResultRow) = LmaasLead(
         id = row[LmaasLeadsTable.id],
         companyName = row[LmaasLeadsTable.companyName],
+        projectName = row[LmaasLeadsTable.projectName],
         contactName = row[LmaasLeadsTable.contactName],
         emails = row[LmaasLeadsTable.emails].split(",").filter { it.isNotBlank() },
         status = row[LmaasLeadsTable.status],
@@ -46,6 +47,7 @@ class PostgresLmaasRepository : LmaasRepositoryPort {
         LmaasLeadsTable.insert {
             it[id] = lead.id
             it[companyName] = lead.companyName
+            it[projectName] = lead.projectName
             it[contactName] = lead.contactName
             it[emails] = lead.emails.joinToString(",")
             it[status] = lead.status
@@ -66,6 +68,7 @@ class PostgresLmaasRepository : LmaasRepositoryPort {
     override suspend fun updateLead(lead: LmaasLead): LmaasLead? = dbQuery {
         val updatedRows = LmaasLeadsTable.update({ LmaasLeadsTable.id eq lead.id }) {
             it[companyName] = lead.companyName
+            it[projectName] = lead.projectName
             it[contactName] = lead.contactName
             it[emails] = lead.emails.joinToString(",")
             it[status] = lead.status

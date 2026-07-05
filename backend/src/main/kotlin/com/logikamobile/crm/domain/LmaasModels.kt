@@ -31,6 +31,7 @@ data class LmaasLead(
     @Serializable(with = UUIDSerializer::class)
     val id: UUID = UUID.randomUUID(),
     val companyName: String,
+    val projectName: String? = null,
     val contactName: String,
     val emails: List<String>,
     val status: String, // String representation of LmaasStatus

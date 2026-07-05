@@ -31,8 +31,8 @@ class JsonbColumnType : org.jetbrains.exposed.sql.ColumnType<String>() {
 
 
 object ProjectsTable : UUIDTable("projects") {
-    // Empresa
     val companyName = varchar("company_name", 255)
+    val projectName = varchar("project_name", 255).nullable()
     val companySize = varchar("company_size", 50).nullable()
     val industry = varchar("industry", 100).nullable()
     

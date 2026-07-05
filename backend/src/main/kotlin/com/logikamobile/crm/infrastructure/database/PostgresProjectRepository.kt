@@ -12,6 +12,7 @@ class PostgresProjectRepository : ProjectRepositoryPort {
     private fun resultRowToProject(row: ResultRow) = Project(
         id = row[ProjectsTable.id].value,
         companyName = row[ProjectsTable.companyName],
+        projectName = row[ProjectsTable.projectName],
         companySize = row[ProjectsTable.companySize],
         industry = row[ProjectsTable.industry],
         contactName = row[ProjectsTable.contactName],
@@ -45,6 +46,7 @@ class PostgresProjectRepository : ProjectRepositoryPort {
         ProjectsTable.insert {
             it[id] = project.id
             it[companyName] = project.companyName
+            it[projectName] = project.projectName
             it[companySize] = project.companySize
             it[industry] = project.industry
             it[contactName] = project.contactName
@@ -91,6 +93,7 @@ class PostgresProjectRepository : ProjectRepositoryPort {
     override suspend fun updateProject(project: Project): Project? = dbQuery {
         val updatedRows = ProjectsTable.update({ ProjectsTable.id eq project.id }) {
             it[companyName] = project.companyName
+            it[projectName] = project.projectName
             it[companySize] = project.companySize
             it[industry] = project.industry
             it[contactName] = project.contactName

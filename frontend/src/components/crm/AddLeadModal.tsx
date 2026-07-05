@@ -29,6 +29,7 @@ export default function AddLeadModal({ isOpen, onClose, onSuccess }: AddLeadModa
       
       const newLead: CreateProjectDto = {
         companyName: formData.get('companyName') as string,
+        projectName: formData.get('projectName') as string || undefined,
         companySize: formData.get('companySize') as string,
         industry: formData.get('industry') as string,
         contactName: formData.get('contactName') as string,
@@ -86,6 +87,10 @@ export default function AddLeadModal({ isOpen, onClose, onSuccess }: AddLeadModa
               <div>
                 <label className="block text-xs font-bold text-gray-400 mb-2 uppercase tracking-widest">Nombre de la Empresa *</label>
                 <input required name="companyName" type="text" className="w-full p-3 bg-black/50 border border-panel-border rounded text-white focus:border-brand-primary focus:ring-1 focus:ring-brand-primary outline-none transition-all placeholder-gray-600" placeholder="Ej. ACME Corp" />
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-gray-400 mb-2 uppercase tracking-widest">Nombre del Proyecto</label>
+                <input name="projectName" type="text" className="w-full p-3 bg-black/50 border border-panel-border rounded text-white focus:border-brand-primary focus:ring-1 focus:ring-brand-primary outline-none transition-all placeholder-gray-600" placeholder="Ej. App de Reparto" />
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>

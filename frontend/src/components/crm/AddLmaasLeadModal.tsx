@@ -25,6 +25,7 @@ export default function AddLmaasLeadModal({
     const formData = new FormData(e.currentTarget);
     const data = {
       companyName: formData.get('companyName'),
+      projectName: formData.get('projectName') || undefined,
       contactName: formData.get('contactName'),
       emails: (formData.get('contactEmails') as string)?.split(',').map(e => e.trim()).filter(e => e) || [],
       status: formData.get('status'),
@@ -70,6 +71,11 @@ export default function AddLmaasLeadModal({
               <div className="space-y-2">
                 <label className="text-xs text-brand-orange uppercase tracking-widest block">Compañía</label>
                 <input required name="companyName" className="w-full bg-black/50 border border-panel-border p-3 text-white focus:border-brand-orange focus:outline-none transition-colors" />
+              </div>
+              
+              <div className="space-y-2">
+                <label className="text-xs text-brand-orange uppercase tracking-widest block">Nombre del Proyecto</label>
+                <input name="projectName" className="w-full bg-black/50 border border-panel-border p-3 text-white focus:border-brand-orange focus:outline-none transition-colors" placeholder="Ej. E-commerce" />
               </div>
               
               <div className="space-y-2">

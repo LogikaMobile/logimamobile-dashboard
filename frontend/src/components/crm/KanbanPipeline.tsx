@@ -116,6 +116,9 @@ export default function KanbanPipeline({ projects }: { projects: Project[] }) {
                       )}
                     </div>
                     <p className="font-bold text-white uppercase">{project.companyName}</p>
+                    {project.projectName && (
+                      <p className="text-sm font-semibold text-brand-purple mt-1">{project.projectName}</p>
+                    )}
                     <p className="text-xs text-gray-400 mb-2 mt-1">{project.contactName} <span className="text-brand-purple">({project.contactChannel})</span></p>
                     <div className="flex justify-between text-sm mt-3 pt-3 border-t border-panel-border">
                       <span className="text-brand-orange font-bold">

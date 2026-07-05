@@ -1,6 +1,7 @@
 export interface Project {
   id: string;
   companyName: string;
+  projectName?: string;
   companySize?: string;
   industry?: string;
   contactName: string;
@@ -55,6 +56,7 @@ export interface MonthlyExpenseRecord {
 export interface LmaasLead {
   id: string;
   companyName: string;
+  projectName?: string;
   contactName: string;
   emails: string[];
   status: string; // 'STEP_0' to 'STEP_8'

@@ -36,6 +36,7 @@ data class Project(
     val id: UUID = UUID.randomUUID(),
     
     val companyName: String,
+    val projectName: String? = null,
     val companySize: String? = null,
     val industry: String? = null,
     
