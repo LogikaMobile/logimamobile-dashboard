@@ -115,9 +115,13 @@ export default function KanbanPipeline({ projects }: { projects: Project[] }) {
                         <span className="text-[10px] font-bold text-black bg-brand-orange px-2 py-0.5 rounded uppercase tracking-widest">PROYECTO</span>
                       )}
                     </div>
-                    <p className="font-bold text-white uppercase">{project.companyName}</p>
-                    {project.projectName && (
-                      <p className="text-sm font-semibold text-brand-purple mt-1">{project.projectName}</p>
+                    {project.projectName ? (
+                      <>
+                        <p className="font-bold text-white uppercase">{project.projectName}</p>
+                        <p className="text-sm font-semibold text-brand-purple mt-1 uppercase">{project.companyName}</p>
+                      </>
+                    ) : (
+                      <p className="font-bold text-white uppercase">{project.companyName}</p>
                     )}
                     <p className="text-xs text-gray-400 mb-2 mt-1">{project.contactName} <span className="text-brand-purple">({project.contactChannel})</span></p>
                     <div className="flex justify-between text-sm mt-3 pt-3 border-t border-panel-border">
