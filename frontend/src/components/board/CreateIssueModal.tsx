@@ -12,7 +12,12 @@ type Epic = {
 type Issue = {
   id: string;
   type: string;
+  parentId?: string;
+  epicId?: string;
   title: string;
+  technicalDescription?: string;
+  fibonacciScore?: number;
+  estimatedHours?: number;
 };
 
 type Project = {
