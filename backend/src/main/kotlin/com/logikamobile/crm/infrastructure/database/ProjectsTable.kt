@@ -58,6 +58,9 @@ object ProjectsTable : UUIDTable("projects") {
     val projectedRevenue = decimal("projected_revenue", 12, 2).default(java.math.BigDecimal.ZERO)
     val operationalCosts = decimal("operational_costs", 12, 2).default(java.math.BigDecimal.ZERO)
     
+    // Legacy Transition
+    val isLegacy = bool("is_legacy").default(false)
+    
     // SaaS / Business Logic
     val projectType = varchar("project_type", 50).nullable() // SAAS or ONE_TIME
     val recurringRevenue = decimal("recurring_revenue", 12, 2).nullable()

@@ -9,6 +9,10 @@ import com.logikamobile.crm.presentation.constantExpenseRoutes
 import com.logikamobile.crm.presentation.financialReportRoutes
 import com.logikamobile.crm.presentation.lmaasRoutes
 import com.logikamobile.crm.infrastructure.database.PostgresLmaasRepository
+import com.logikamobile.crm.infrastructure.database.BoardRepository
+import com.logikamobile.crm.api.boardRoutes
+import com.logikamobile.crm.infrastructure.database.PostgresDeveloperRepository
+import com.logikamobile.crm.presentation.developerRoutes
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpMethod
 import io.ktor.serialization.kotlinx.json.json
@@ -34,6 +38,7 @@ fun Application.module() {
             prettyPrint = true
             isLenient = true
             ignoreUnknownKeys = true
+            encodeDefaults = true
         })
     }
     
@@ -44,6 +49,7 @@ fun Application.module() {
         allowMethod(HttpMethod.Patch)
         allowHeader(HttpHeaders.Authorization)
         allowHeader(HttpHeaders.ContentType)
+        allowHeader("X-User-Id")
         anyHost() // Allow all for development
     }
 
@@ -60,11 +66,16 @@ fun Application.module() {
     val financialReportUseCases = com.logikamobile.crm.application.FinancialReportUseCases(reportRepository, expenseRepository)
 
     val lmaasRepository = PostgresLmaasRepository()
+    val boardRepository = BoardRepository()
 
     routing {
         projectRoutes(getProjectsUseCase, createProjectUseCase, updateProjectUseCase)
         constantExpenseRoutes(getExpensesUseCase, createExpenseUseCase, deleteExpenseUseCase)
         financialReportRoutes(financialReportUseCases)
         lmaasRoutes(lmaasRepository)
+        boardRoutes(boardRepository)
+        
+        val developerRepo = PostgresDeveloperRepository()
+        developerRoutes(developerRepo)
     }
 }

@@ -35,7 +35,7 @@ export default function FinancialDashboard({
     return acc + Math.max(0, proj);
   }, 0);
   
-  const operationalCosts = filteredProjects.reduce((acc, p) => acc + (Number(p.operationalCosts) || 0), 0);
+  const operationalCosts = filteredProjects.reduce((acc, p) => acc + (Number(p.operationalCosts) || 0) + (Number(p.developerCosts) || 0), 0);
   
   const constantIncomesMonthly = constantExpenses
     .filter(e => e.type === 'INCOME')

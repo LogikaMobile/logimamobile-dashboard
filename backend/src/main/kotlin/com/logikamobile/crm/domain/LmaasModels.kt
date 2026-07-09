@@ -56,7 +56,8 @@ data class LmaasSubscription(
     @Serializable(with = BigDecimalSerializer::class)
     val generatedRevenue: BigDecimal = BigDecimal.ZERO,
     @Serializable(with = BigDecimalSerializer::class)
-    val operatingCosts: BigDecimal = BigDecimal.ZERO
+    val operatingCosts: BigDecimal = BigDecimal.ZERO,
+    val status: String = "ACTIVE"
 )
 
 @Serializable

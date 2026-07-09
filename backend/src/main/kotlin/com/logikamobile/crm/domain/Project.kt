@@ -78,5 +78,9 @@ data class Project(
     val billingYear: Int? = null,
     val completionYear: Int? = null,
     
+    val isLegacy: Boolean = false,
+    @Serializable(with = BigDecimalSerializer::class)
+    val developerCosts: BigDecimal = BigDecimal.ZERO,
+    
     val projectNotes: String? = null // Jsonb stored as string in domain for simplicity, parsed when needed
 )

@@ -10,6 +10,7 @@ import org.jetbrains.exposed.sql.StdOutSqlLogger
 import org.jetbrains.exposed.sql.addLogger
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import org.jetbrains.exposed.sql.transactions.transaction
+import org.jetbrains.exposed.sql.update
 
 object DatabaseFactory {
     fun init() {
@@ -30,8 +31,19 @@ object DatabaseFactory {
                 MonthlyExpenseRecordsTable,
                 LmaasLeadsTable,
                 LmaasSubscriptionsTable,
-                LmaasTicketsTable
+                LmaasTicketsTable,
+                EpicsTable,
+                IssuesTable,
+                IssueHistoryTable,
+                IssueCommentsTable,
+                DevelopersTable,
+                ProjectAssignmentsTable
             )
+            
+            // Run Migration for Legacy projects
+            ProjectsTable.update({ ProjectsTable.status inList listOf("STEP_10", "DELIVERED", "LOST") }) {
+                it[isLegacy] = true
+            }
         }
     }
 

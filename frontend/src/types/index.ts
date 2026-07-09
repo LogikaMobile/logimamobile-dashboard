@@ -27,6 +27,9 @@ export interface Project {
   projectNotes?: string;
   billingYear?: number;
   completionYear?: number;
+  
+  isLegacy?: boolean;
+  developerCosts?: number;
 }
 
 export type CreateProjectDto = Omit<Project, 'id'>;
@@ -93,4 +96,64 @@ export interface LmaasTicket {
 export interface UpdateExpenseRecordDto {
   actualAmount: number;
   modificationNote: string;
+}
+
+export interface Developer {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+  jobTitle: string;
+  hourlyRate: number;
+  availableHoursPerMonth: number;
+  isActive: boolean;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export interface ProjectAssignment {
+  id: string;
+  developerId: string;
+  legacyProjectId?: string;
+  lmaasLeadId?: string;
+  assignmentType: string;
+  assignedMonth: number;
+  assignedYear: number;
+  allocatedHours: number;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export interface ProjectAssignmentWithDetails {
+  assignment: ProjectAssignment;
+  projectName: string;
+  projectType: 'LEGACY' | 'LMAAS';
+}
+
+export interface DeveloperWithFinancials {
+  developer: Developer;
+  month: number;
+  year: number;
+  usedHours: number;
+  remuneration: number;
+  assignments: ProjectAssignmentWithDetails[];
+}
+
+export interface CreateDeveloperDto {
+  name: string;
+  email: string;
+  role: string;
+  jobTitle: string;
+  hourlyRate: number;
+  availableHoursPerMonth: number;
+}
+
+export interface CreateProjectAssignmentDto {
+  developerId: string;
+  legacyProjectId?: string;
+  lmaasLeadId?: string;
+  assignmentType: string;
+  assignedMonth: number;
+  assignedYear: number;
+  allocatedHours: number;
 }

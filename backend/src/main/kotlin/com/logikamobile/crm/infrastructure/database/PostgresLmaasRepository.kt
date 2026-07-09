@@ -30,7 +30,8 @@ class PostgresLmaasRepository : LmaasRepositoryPort {
         monthlyFee = row[LmaasSubscriptionsTable.monthlyFee],
         annualizedValue = row[LmaasSubscriptionsTable.annualizedValue],
         generatedRevenue = row[LmaasSubscriptionsTable.generatedRevenue],
-        operatingCosts = row[LmaasSubscriptionsTable.operatingCosts]
+        operatingCosts = row[LmaasSubscriptionsTable.operatingCosts],
+        status = row[LmaasSubscriptionsTable.status]
     )
 
     private fun resultRowToTicket(row: ResultRow) = LmaasTicket(

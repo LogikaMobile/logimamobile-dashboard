@@ -6,6 +6,18 @@ import com.logikamobile.crm.infrastructure.database.DatabaseFactory.dbQuery
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import java.util.UUID
+import java.math.BigDecimal
+
+class MultiplyOp(val expr1: Expression<*>, val expr2: Expression<*>) : ExpressionWithColumnType<Double>() {
+    override val columnType = DoubleColumnType()
+    override fun toQueryBuilder(queryBuilder: QueryBuilder) {
+        queryBuilder.append("(")
+        expr1.toQueryBuilder(queryBuilder)
+        queryBuilder.append(" * ")
+        expr2.toQueryBuilder(queryBuilder)
+        queryBuilder.append(")")
+    }
+}
 
 class PostgresProjectRepository : ProjectRepositoryPort {
 
@@ -38,6 +50,9 @@ class PostgresProjectRepository : ProjectRepositoryPort {
         
         billingYear = row[ProjectsTable.billingYear],
         completionYear = row[ProjectsTable.completionYear],
+
+        isLegacy = row[ProjectsTable.isLegacy],
+        developerCosts = try { row[Expression.build { Sum(MultiplyOp(ProjectAssignmentsTable.allocatedHours, DevelopersTable.hourlyRate), DoubleColumnType()) }]?.let { BigDecimal(it.toString()) } ?: BigDecimal.ZERO } catch (e: Exception) { BigDecimal.ZERO },
 
         projectNotes = row[ProjectsTable.projectNotes]
     )
@@ -73,6 +88,8 @@ class PostgresProjectRepository : ProjectRepositoryPort {
             it[billingYear] = project.billingYear
             it[completionYear] = project.completionYear
 
+            it[isLegacy] = project.isLegacy
+
             it[projectNotes] = project.projectNotes
         }
         project
@@ -80,14 +97,22 @@ class PostgresProjectRepository : ProjectRepositoryPort {
 
     override suspend fun getProjectById(id: UUID): Project? = dbQuery {
         ProjectsTable
-            .selectAll()
+            .join(ProjectAssignmentsTable, JoinType.LEFT, onColumn = ProjectsTable.id, otherColumn = ProjectAssignmentsTable.legacyProjectId)
+            .join(DevelopersTable, JoinType.LEFT, onColumn = ProjectAssignmentsTable.developerId, otherColumn = DevelopersTable.id)
+            .select(ProjectsTable.columns + Sum(MultiplyOp(ProjectAssignmentsTable.allocatedHours, DevelopersTable.hourlyRate), DoubleColumnType()))
             .where { ProjectsTable.id eq id }
+            .groupBy(*ProjectsTable.columns.toTypedArray())
             .map(::resultRowToProject)
             .singleOrNull()
     }
 
     override suspend fun getAllProjects(): List<Project> = dbQuery {
-        ProjectsTable.selectAll().map(::resultRowToProject)
+        ProjectsTable
+            .join(ProjectAssignmentsTable, JoinType.LEFT, onColumn = ProjectsTable.id, otherColumn = ProjectAssignmentsTable.legacyProjectId)
+            .join(DevelopersTable, JoinType.LEFT, onColumn = ProjectAssignmentsTable.developerId, otherColumn = DevelopersTable.id)
+            .select(ProjectsTable.columns + Sum(MultiplyOp(ProjectAssignmentsTable.allocatedHours, DevelopersTable.hourlyRate), DoubleColumnType()))
+            .groupBy(*ProjectsTable.columns.toTypedArray())
+            .map(::resultRowToProject)
     }
 
     override suspend fun updateProject(project: Project): Project? = dbQuery {
@@ -119,6 +144,8 @@ class PostgresProjectRepository : ProjectRepositoryPort {
             
             it[billingYear] = project.billingYear
             it[completionYear] = project.completionYear
+            
+            it[isLegacy] = project.isLegacy
 
             it[projectNotes] = project.projectNotes
         }

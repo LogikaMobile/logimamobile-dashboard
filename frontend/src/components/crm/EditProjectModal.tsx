@@ -3,6 +3,7 @@ import { X, Calendar as CalendarIcon } from 'lucide-react';
 import { Project } from '@/types';
 import { updateProject } from '@/lib/api';
 import ScheduleMeetingModal from './ScheduleMeetingModal';
+import ProjectResourceAssignment from './ProjectResourceAssignment';
 
 interface EditProjectModalProps {
   isOpen: boolean;
@@ -15,11 +16,13 @@ export default function EditProjectModal({ isOpen, onClose, onSuccess, project }
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [projectType, setProjectType] = useState<string>('');
+  const [isLegacy, setIsLegacy] = useState<boolean>(false);
   const [isScheduleMeetingOpen, setIsScheduleMeetingOpen] = useState(false);
 
   useEffect(() => {
     if (project) {
       setProjectType(project.projectType || '');
+      setIsLegacy(project.isLegacy || false);
     }
   }, [project]);
 
@@ -57,6 +60,7 @@ export default function EditProjectModal({ isOpen, onClose, onSuccess, project }
       billingYear: Number(formData.get('billingYear')) || undefined,
       completionYear: Number(formData.get('completionYear')) || undefined,
 
+      isLegacy,
       projectNotes: formData.get('projectNotes') as string,
     };
     
@@ -95,6 +99,19 @@ export default function EditProjectModal({ isOpen, onClose, onSuccess, project }
           )}
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="md:col-span-2 flex items-center p-4 bg-brand-orange/10 border border-brand-orange/30 rounded">
+              <label className="flex items-center cursor-pointer">
+                <div className="relative">
+                  <input type="checkbox" className="sr-only" checked={isLegacy} onChange={() => setIsLegacy(!isLegacy)} />
+                  <div className={`block w-10 h-6 rounded-full transition-colors ${isLegacy ? 'bg-brand-orange' : 'bg-gray-600'}`}></div>
+                  <div className={`dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform ${isLegacy ? 'transform translate-x-4' : ''}`}></div>
+                </div>
+                <div className="ml-3 text-sm font-bold text-white uppercase tracking-widest">
+                  Marcar como Proyecto Legacy <span className="text-gray-400 text-xs normal-case">(Exento de COGS Dinámico)</span>
+                </div>
+              </label>
+            </div>
+
             {/* Sección Empresa */}
             <div className="space-y-4">
               <h3 className="text-lg font-bold text-brand-primary border-b border-panel-border pb-2 uppercase tracking-widest">/ DATOS_EMPRESA</h3>
@@ -232,7 +249,7 @@ export default function EditProjectModal({ isOpen, onClose, onSuccess, project }
                   </div>
                 </div>
                 <div>
-                  <label className="block text-xs font-bold text-red-500 mb-2 uppercase tracking-widest">Costos Operativos</label>
+                  <label className="block text-xs font-bold text-red-500 mb-2 uppercase tracking-widest">Costos de Infra / Licencias</label>
                   <div className="relative">
                     <span className="absolute left-3 top-3 text-red-500/50">$</span>
                     <input name="operationalCosts" type="number" step="0.01" defaultValue={project.operationalCosts || ""} className="w-full p-3 pl-8 bg-black/50 border border-panel-border rounded text-white focus:border-red-500 focus:ring-1 focus:ring-red-500 outline-none transition-all placeholder-gray-700" placeholder="0.00" />
@@ -252,6 +269,11 @@ export default function EditProjectModal({ isOpen, onClose, onSuccess, project }
                 </div>
               </div>
             </div>
+
+            {/* Sub-formulario Asignación de Recursos */}
+            {!isLegacy && (
+              <ProjectResourceAssignment projectId={project.id} />
+            )}
 
             {/* Sección Notas */}
             <div className="space-y-4 md:col-span-2">

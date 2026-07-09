@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import useSWR from 'swr';
 import Image from 'next/image';
+import Link from 'next/link';
 import KpiHeader from '@/components/crm/KpiHeader';
 import FinancialDashboard from '@/components/crm/FinancialDashboard';
 import KanbanPipeline from '@/components/crm/KanbanPipeline';
@@ -16,7 +17,7 @@ import SlaPaymentModal from '@/components/crm/SlaPaymentModal';
 import WorkflowWarningModal from '@/components/crm/WorkflowWarningModal';
 import RefundWarningModal from '@/components/crm/RefundWarningModal';
 import { fetchProjects, fetchConstantExpenses, fetchLmaasLeads, fetchLmaasTickets } from '@/lib/api';
-import Logo from '../../public/Logo.svg';
+import Logo from '../../../../../public/Logo.svg';
 import { LmaasLeadWithSubscription } from '@/types';
 
 export default function Home() {
@@ -81,6 +82,20 @@ export default function Home() {
                 >
                   LMAAS
                 </button>
+              </div>
+              <div className="ml-4 flex gap-2">
+                <Link 
+                  href="/apps/personal"
+                  className="px-6 py-3 bg-[#111111] border border-white/20 text-white font-bold tracking-wider hover:bg-white hover:text-black transition-colors uppercase flex items-center justify-center gap-2"
+                >
+                  ENG_HR_DASHBOARD &gt;
+                </Link>
+                <Link 
+                  href="/apps/board"
+                  className="px-6 py-3 bg-white text-black font-bold tracking-wider hover:bg-gray-300 transition-colors uppercase flex items-center justify-center gap-2"
+                >
+                  TASKBOARD &gt;
+                </Link>
               </div>
             </div>
           </div>

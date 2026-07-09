@@ -25,6 +25,7 @@ object LmaasSubscriptionsTable : Table("lmaas_subscriptions") {
     val annualizedValue = decimal("annualized_value", 15, 2)
     val generatedRevenue = decimal("generated_revenue", 15, 2)
     val operatingCosts = decimal("operating_costs", 15, 2).default(java.math.BigDecimal.ZERO)
+    val status = varchar("status", 50).default("ACTIVE")
 
     override val primaryKey = PrimaryKey(id)
 }
