@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   output: 'standalone',
-  basePath: '/apps/projects/dashboard',
+  assetPrefix: '/lm-assets',
 };
 
 export default nextConfig;
