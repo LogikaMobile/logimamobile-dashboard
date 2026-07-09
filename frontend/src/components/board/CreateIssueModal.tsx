@@ -195,7 +195,7 @@ export default function CreateIssueModal({ onClose, onSuccess, initialData }: Cr
                   }}
                   className={`flex-1 py-2 text-xs font-bold tracking-widest transition-colors ${
                     type === t.value ? "bg-white text-black" : "text-gray-500 hover:text-white"
-                  } ${initialData && type !== t ? "opacity-50 cursor-not-allowed" : ""}`}
+                  } ${initialData && type !== t.value ? "opacity-50 cursor-not-allowed" : ""}`}
                   disabled={!!initialData}
                 >
                   {t.label}
