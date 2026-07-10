@@ -17,6 +17,7 @@ declare module "next-auth" {
 }
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
+  basePath: "/api/dashboard-auth",
   providers: [
     Google({
       clientId: process.env.GSSO_ID_CLIENT,
