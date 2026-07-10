@@ -15,8 +15,8 @@ export default async function LoginPage({
   const isAccessDenied = errorParam ? String(errorParam).includes('AccessDenied') : false;
 
   const session = await auth();
-  if (session) {
-    const role = session.user?.role;
+  if (session && session.user?.role) {
+    const role = session.user.role;
     if (role === 'ENGINEER') {
       redirect('/apps/board');
     }

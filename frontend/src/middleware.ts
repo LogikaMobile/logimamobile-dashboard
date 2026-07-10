@@ -12,8 +12,13 @@ export default auth((req) => {
     return NextResponse.redirect(new URL('/login', req.url))
   }
 
-  // If already logged in, redirect away from login page
-  if (isLoggedIn && path.startsWith('/login')) {
+  // If logged in but has no role (e.g. session cookie from another app on the same domain)
+  if (isLoggedIn && !role && !path.startsWith('/login')) {
+    return NextResponse.redirect(new URL('/login?error=AccessDenied', req.url))
+  }
+
+  // If already logged in AND has a role, redirect away from login page
+  if (isLoggedIn && role && path.startsWith('/login')) {
     if (role === 'ENGINEER') {
       return NextResponse.redirect(new URL('/apps/board', req.url))
     }
