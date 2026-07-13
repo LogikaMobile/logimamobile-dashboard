@@ -13,6 +13,7 @@ import com.logikamobile.crm.infrastructure.database.BoardRepository
 import com.logikamobile.crm.api.boardRoutes
 import com.logikamobile.crm.infrastructure.database.PostgresDeveloperRepository
 import com.logikamobile.crm.presentation.developerRoutes
+import com.logikamobile.crm.presentation.routes.webLeadsRoutes
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpMethod
 import io.ktor.serialization.kotlinx.json.json
@@ -50,6 +51,7 @@ fun Application.module() {
         allowHeader(HttpHeaders.Authorization)
         allowHeader(HttpHeaders.ContentType)
         allowHeader("X-User-Id")
+        allowHeader("X-API-KEY")
         anyHost() // Allow all for development
     }
 
@@ -77,5 +79,7 @@ fun Application.module() {
         
         val developerRepo = PostgresDeveloperRepository()
         developerRoutes(developerRepo)
+        
+        webLeadsRoutes()
     }
 }

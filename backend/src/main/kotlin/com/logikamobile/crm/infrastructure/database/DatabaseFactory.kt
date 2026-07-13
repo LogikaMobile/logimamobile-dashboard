@@ -37,7 +37,9 @@ object DatabaseFactory {
                 IssueHistoryTable,
                 IssueCommentsTable,
                 DevelopersTable,
-                ProjectAssignmentsTable
+                ProjectAssignmentsTable,
+                WebLeadsLmaasTable,
+                WebLeadsTraditionalTable
             )
             
             // Run Migration for Legacy projects
