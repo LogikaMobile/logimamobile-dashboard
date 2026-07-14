@@ -1,0 +1,69 @@
+import React from 'react';
+import { t } from '@/lib/documentTranslations';
+import { DocumentHeader } from './DocumentHeader';
+
+interface RfqSaasData {
+  projectName: string;
+  clientName: string;
+  date: string;
+  objective: string;
+  setupFee: string;
+  licenseDetails: string;
+  licensePrice: string;
+  currency: string;
+  techConsiderations: string;
+  legalDocs: string;
+}
+
+interface Props {
+  language: 'ES' | 'EN';
+  data: RfqSaasData;
+}
+
+export const RfqSaasTemplate: React.FC<Props> = ({ language, data }) => {
+  const dict = t[language];
+
+  return (
+    <div className="font-sans text-sm text-gray-800">
+      <DocumentHeader 
+        title={dict.RFQ_SAAS_TITLE}
+        subtitle={data.projectName}
+        rightText1={`Para: ${data.clientName}`}
+        rightText2={data.date}
+      />
+
+      <div className="space-y-8">
+        <section>
+          <h2 className="text-lg font-bold text-gray-900 mb-2 uppercase border-b border-gray-200 pb-1">{dict.RFQ_SAAS_OBJ}</h2>
+          <p className="whitespace-pre-line text-gray-700">{data.objective}</p>
+        </section>
+
+        <section>
+          <h2 className="text-lg font-bold text-gray-900 mb-2 uppercase border-b border-gray-200 pb-1">{dict.RFQ_SAAS_SETUP}</h2>
+          <div className="bg-gray-50 p-4 border-l-4 border-gray-400">
+            <p className="text-2xl font-mono font-bold">{data.setupFee} {data.currency}</p>
+            <p className="text-xs text-gray-500 mt-1">Pago único por implementación inicial y configuración.</p>
+          </div>
+        </section>
+
+        <section>
+          <h2 className="text-lg font-bold text-gray-900 mb-2 uppercase border-b border-gray-200 pb-1">{dict.RFQ_SAAS_LICENSE}</h2>
+          <div className="bg-blue-50 p-4 border border-blue-200 rounded-lg">
+            <p className="text-2xl font-mono font-bold text-logika-blue mb-4">{data.licensePrice} {data.currency} <span className="text-sm font-sans text-gray-600 font-normal">/ mes</span></p>
+            <p className="whitespace-pre-line text-gray-700 text-sm">{data.licenseDetails}</p>
+          </div>
+        </section>
+
+        <section>
+          <h2 className="text-lg font-bold text-gray-900 mb-2 uppercase border-b border-gray-200 pb-1">{dict.RFQ_SAAS_TECH}</h2>
+          <p className="whitespace-pre-line text-gray-700">{data.techConsiderations}</p>
+        </section>
+
+        <section>
+          <h2 className="text-lg font-bold text-gray-900 mb-2 uppercase border-b border-gray-200 pb-1">{dict.RFQ_SAAS_LEGAL}</h2>
+          <p className="whitespace-pre-line text-gray-700">{data.legalDocs}</p>
+        </section>
+      </div>
+    </div>
+  );
+};

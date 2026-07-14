@@ -91,6 +91,12 @@ export default function Home() {
                   ENG_HR_DASHBOARD &gt;
                 </Link>
                 <Link 
+                  href="/apps/documents"
+                  className="px-6 py-3 bg-[#111111] border border-white/20 text-white font-bold tracking-wider hover:bg-white hover:text-black transition-colors uppercase flex items-center justify-center gap-2"
+                >
+                  DOC_CENTER &gt;
+                </Link>
+                <Link 
                   href="/apps/board"
                   className="px-6 py-3 bg-white text-black font-bold tracking-wider hover:bg-gray-300 transition-colors uppercase flex items-center justify-center gap-2"
                 >

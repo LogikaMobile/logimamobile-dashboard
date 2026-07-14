@@ -39,7 +39,8 @@ object DatabaseFactory {
                 DevelopersTable,
                 ProjectAssignmentsTable,
                 WebLeadsLmaasTable,
-                WebLeadsTraditionalTable
+                WebLeadsTraditionalTable,
+                ProjectDocumentsTable
             )
             
             // Run Migration for Legacy projects

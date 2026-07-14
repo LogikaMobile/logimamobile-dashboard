@@ -231,3 +231,16 @@ export async function deleteAssignment(id: string): Promise<void> {
   });
   if (!res.ok) throw new Error('Failed to delete assignment');
 }
+
+export async function createDocument(data: any): Promise<any> {
+  const res = await fetch(`${API_BASE_URL}/api/documents`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  });
+  if (!res.ok) {
+    const errorText = await res.text();
+    throw new Error(errorText || 'Failed to save document');
+  }
+  return res.json();
+}

@@ -14,6 +14,8 @@ import com.logikamobile.crm.api.boardRoutes
 import com.logikamobile.crm.infrastructure.database.PostgresDeveloperRepository
 import com.logikamobile.crm.presentation.developerRoutes
 import com.logikamobile.crm.presentation.routes.webLeadsRoutes
+import com.logikamobile.crm.presentation.routes.documentRoutes
+import com.logikamobile.crm.infrastructure.database.DocumentsRepository
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpMethod
 import io.ktor.serialization.kotlinx.json.json
@@ -81,5 +83,8 @@ fun Application.module() {
         developerRoutes(developerRepo)
         
         webLeadsRoutes()
+        
+        val docsRepo = DocumentsRepository()
+        documentRoutes(docsRepo)
     }
 }

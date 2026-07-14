@@ -33,7 +33,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         
         try {
           // Fetch developer by email to see if they exist in our CRM DB
-          const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080'}/auth/lookup?email=${encodeURIComponent(user.email)}`, {
+          const apiUrl = process.env.INTERNAL_API_URL || process.env.NEXT_PUBLIC_API_URL || 'http://backend:8080';
+          const res = await fetch(`${apiUrl}/auth/lookup?email=${encodeURIComponent(user.email)}`, {
             method: 'GET',
             cache: 'no-store'
           });
