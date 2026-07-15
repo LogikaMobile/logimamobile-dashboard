@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   output: 'standalone',
-  assetPrefix: '/lm-assets', // ATENCIÓN: Descomentado para producción. Comentar en local si rompe estilos.
+  assetPrefix: process.env.NEXT_PUBLIC_ASSET_PREFIX || undefined,
 };
 
 export default nextConfig;
