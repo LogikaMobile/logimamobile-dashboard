@@ -59,6 +59,19 @@ export const t = {
     RFQ_LMAAS_SLA: "4. Acuerdos de Nivel de Servicio (SLA)",
     RFQ_LMAAS_EXIT: "5. Cláusula de Salida (Offboarding) y Datos",
 
+    // Email Accounts
+    EMAIL_ACC_TITLE: "Guía de Configuración de Cuenta de Correo",
+    EMAIL_ACC_SEC1: "1. Información de Acceso",
+    EMAIL_ACC_CRED: "Sus Credenciales",
+    EMAIL_ACC_EMAIL: "Correo Electrónico",
+    EMAIL_ACC_PASS: "Contraseña",
+    EMAIL_ACC_SEC2: "2. Configuración en Móvil (iOS/Android)",
+    EMAIL_ACC_STEPS: "Pasos de Configuración",
+    EMAIL_ACC_SEC3: "3. Acceso Web (Recomendado)",
+    EMAIL_ACC_WEB: "Acceso vía Navegador",
+    EMAIL_ACC_VISIT: "Visite",
+    EMAIL_ACC_LOGIN: "Inicie sesión utilizando su correo electrónico y contraseña proporcionados arriba.",
+
   },
   EN: {
     // Invoice
@@ -119,5 +132,18 @@ export const t = {
     RFQ_LMAAS_ONBOARDING: "3. Onboarding Fee",
     RFQ_LMAAS_SLA: "4. Service Level Agreements (SLA)",
     RFQ_LMAAS_EXIT: "5. Offboarding & Data Ownership",
+
+    // Email Accounts
+    EMAIL_ACC_TITLE: "Email Account Configuration Guide",
+    EMAIL_ACC_SEC1: "1. Access Information",
+    EMAIL_ACC_CRED: "Your Credentials",
+    EMAIL_ACC_EMAIL: "Email",
+    EMAIL_ACC_PASS: "Password",
+    EMAIL_ACC_SEC2: "2. Mobile Configuration (iOS/Android)",
+    EMAIL_ACC_STEPS: "Configuration Steps",
+    EMAIL_ACC_SEC3: "3. Web Access (Recommended)",
+    EMAIL_ACC_WEB: "Browser Access",
+    EMAIL_ACC_VISIT: "Visit",
+    EMAIL_ACC_LOGIN: "Log in using your email and password provided above.",
   }
 }

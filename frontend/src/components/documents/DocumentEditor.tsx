@@ -10,8 +10,9 @@ import { MvpTemplate } from './templates/MvpTemplate';
 import { RfqCustomTemplate } from './templates/RfqCustomTemplate';
 import { RfqSaasTemplate } from './templates/RfqSaasTemplate';
 import { RfqLmaasTemplate } from './templates/RfqLmaasTemplate';
+import { EmailAccountsTemplate } from './templates/EmailAccountsTemplate';
 
-type DocumentType = 'INVOICE' | 'MVP' | 'RFQ_CUSTOM' | 'RFQ_SAAS' | 'RFQ_LMAAS';
+type DocumentType = 'INVOICE' | 'MVP' | 'RFQ_CUSTOM' | 'RFQ_SAAS' | 'RFQ_LMAAS' | 'EMAIL_ACCOUNTS';
 type Language = 'ES' | 'EN';
 
 const DEFAULT_SCHEMAS: Record<DocumentType, any> = {
@@ -84,6 +85,27 @@ const DEFAULT_SCHEMAS: Record<DocumentType, any> = {
     onboardingFee: "0",
     sla: "Tiempo de respuesta para bugs críticos: 4 horas.",
     exitClause: "El cliente puede cancelar con 30 días de anticipación sin penalización."
+  },
+  EMAIL_ACCOUNTS: {
+    date: "2026-07-16",
+    clientName: "Clinvelt",
+    introText: "Esta guía proporciona la información necesaria para configurar su cuenta de correo profesional impulsada por la infraestructura de LogikaMobile.",
+    accounts: [
+      {
+        email: "contacto@clinvelt.com.mx",
+        password: "Mexico40"
+      }
+    ],
+    mobileSteps: [
+      "Abra su aplicación de correo y seleccione Agregar Cuenta.",
+      "Elija Otra.",
+      "Ingrese su correo electrónico.",
+      "Seleccione Personal (IMAP)",
+      "Ingrese su contraseña.",
+      "Cambie lo que esté en el campo Servidor por chocobo.mxrouting.net",
+      "Cambie lo que esté en el campo SMTP por chocobo.mxrouting.net"
+    ],
+    webmailUrl: "https://chocobo.mxrouting.net/webmail/"
   }
 };
 
@@ -182,6 +204,7 @@ export default function DocumentEditor() {
               <option value="RFQ_CUSTOM">Propuesta: Desarrollo a la Medida</option>
               <option value="RFQ_SAAS">Propuesta: SaaS</option>
               <option value="RFQ_LMAAS">Propuesta: LMaaS</option>
+              <option value="EMAIL_ACCOUNTS">Guía: Cuentas de Correo</option>
             </select>
           </div>
           
@@ -249,6 +272,7 @@ export default function DocumentEditor() {
           {docType === 'RFQ_CUSTOM' && <RfqCustomTemplate language={language} data={data} />}
           {docType === 'RFQ_SAAS' && <RfqSaasTemplate language={language} data={data} />}
           {docType === 'RFQ_LMAAS' && <RfqLmaasTemplate language={language} data={data} />}
+          {docType === 'EMAIL_ACCOUNTS' && <EmailAccountsTemplate language={language} data={data} />}
         </DocumentPreview>
       </div>
     </div>
