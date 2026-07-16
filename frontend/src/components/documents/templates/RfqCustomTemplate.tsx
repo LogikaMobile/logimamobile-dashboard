@@ -42,10 +42,10 @@ export const RfqCustomTemplate: React.FC<Props> = ({ language, data }) => {
       <div className="print:hidden">{header}</div>
       <div className="hidden print:block print:fixed print:top-0 print:left-0 print:w-full z-50">{header}</div>
       <table className="w-full border-collapse border-spacing-0">
-        <thead className="hidden print:table-header-group">
-          <tr>
-            <td className="p-0 border-none">
-              <div style={{ height: '215px' }}></div>
+        <thead className="hidden print:table-header-group bg-transparent shadow-none">
+          <tr className="bg-transparent shadow-none">
+            <td className="p-0 border-none bg-transparent shadow-none">
+              <div style={{ height: '215px' }} className="bg-transparent shadow-none"></div>
             </td>
           </tr>
         </thead>
