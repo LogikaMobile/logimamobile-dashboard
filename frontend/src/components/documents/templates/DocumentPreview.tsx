@@ -27,7 +27,7 @@ export const DocumentPreview = forwardRef<HTMLDivElement, DocumentPreviewProps>(
             }
           `}</style>
           {/* Watermark */}
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden z-0">
+          <div className="absolute print:fixed inset-0 flex items-center justify-center pointer-events-none overflow-hidden z-0">
             <Image 
               src={Logo} 
               alt="Watermark" 
