@@ -24,23 +24,30 @@ interface Props {
 export const EmailAccountsTemplate: React.FC<Props> = ({ language, data }) => {
   const dict = t[language];
 
+  const header = (
+    <DocumentHeader 
+      title={dict.EMAIL_ACC_TITLE}
+      subtitle=""
+      rightText1={`Para: ${data.clientName || ''}`}
+      rightText2={data.date || ''}
+    />
+  );
+
   return (
-    <table className="w-full border-collapse border-spacing-0">
-      <thead className="table-header-group">
-        <tr>
-          <td className="p-0 border-none align-top">
-            <DocumentHeader 
-              title={dict.EMAIL_ACC_TITLE}
-              subtitle=""
-              rightText1={`Para: ${data.clientName || ''}`}
-              rightText2={data.date || ''}
-            />
-          </td>
-        </tr>
-      </thead>
-      <tbody className="table-row-group">
-        <tr>
-          <td className="p-0 border-none align-top">
+    <>
+      <div className="print:hidden">{header}</div>
+      <div className="hidden print:block print:fixed print:top-0 print:left-0 print:w-full z-50">{header}</div>
+      <table className="w-full border-collapse border-spacing-0">
+        <thead className="hidden print:table-header-group">
+          <tr>
+            <td className="p-0 border-none align-top">
+              <div className="opacity-0 pointer-events-none">{header}</div>
+            </td>
+          </tr>
+        </thead>
+        <tbody className="table-row-group">
+          <tr>
+            <td className="p-0 border-none align-top">
             <div className="font-sans text-sm text-gray-800 px-[20mm] pb-[20mm]">
               <p className="mb-8 text-gray-700 whitespace-pre-line leading-relaxed">
                 {data.introText}
@@ -109,5 +116,6 @@ export const EmailAccountsTemplate: React.FC<Props> = ({ language, data }) => {
         </tr>
       </tbody>
     </table>
+    </>
   );
 };

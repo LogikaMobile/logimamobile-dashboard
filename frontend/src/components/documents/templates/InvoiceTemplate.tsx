@@ -39,23 +39,30 @@ interface Props {
 export const InvoiceTemplate: React.FC<Props> = ({ language, data }) => {
   const dict = t[language];
 
+  const header = (
+    <DocumentHeader 
+      title={data.title || dict.INVOICE_TITLE}
+      subtitle={`${dict.FOLIO}: ${data.folio || 'N/A'}`}
+      rightText1={`${dict.DATE_ISSUED}: ${data.dateIssued || ''}`}
+      rightText2={`${dict.DATE_DUE}: ${data.dateDue || ''}`}
+    />
+  );
+
   return (
-    <table className="w-full border-collapse border-spacing-0">
-      <thead className="table-header-group">
-        <tr>
-          <td className="p-0 border-none align-top">
-            <DocumentHeader 
-              title={data.title || dict.INVOICE_TITLE}
-              subtitle={`${dict.FOLIO}: ${data.folio || 'N/A'}`}
-              rightText1={`${dict.DATE_ISSUED}: ${data.dateIssued || ''}`}
-              rightText2={`${dict.DATE_DUE}: ${data.dateDue || ''}`}
-            />
-          </td>
-        </tr>
-      </thead>
-      <tbody className="table-row-group">
-        <tr>
-          <td className="p-0 border-none align-top">
+    <>
+      <div className="print:hidden">{header}</div>
+      <div className="hidden print:block print:fixed print:top-0 print:left-0 print:w-full z-50">{header}</div>
+      <table className="w-full border-collapse border-spacing-0">
+        <thead className="hidden print:table-header-group">
+          <tr>
+            <td className="p-0 border-none align-top">
+              <div className="opacity-0 pointer-events-none">{header}</div>
+            </td>
+          </tr>
+        </thead>
+        <tbody className="table-row-group">
+          <tr>
+            <td className="p-0 border-none align-top">
             <div className="font-sans text-sm px-[20mm] pb-[20mm]">
 
       {/* Entities */}
@@ -127,5 +134,6 @@ export const InvoiceTemplate: React.FC<Props> = ({ language, data }) => {
         </tr>
       </tbody>
     </table>
+    </>
   );
 };
