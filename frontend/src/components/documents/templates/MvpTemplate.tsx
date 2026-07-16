@@ -88,6 +88,7 @@ export const MvpTemplate: React.FC<Props> = ({ language, data }) => {
           <h2 className="text-xl font-bold text-logika-blue mb-3">{dict.MVP_CRITERIA}</h2>
           <p className="whitespace-pre-line text-gray-700">{data.criteria}</p>
         </section>
+      </div>
             </div>
           </td>
         </tr>

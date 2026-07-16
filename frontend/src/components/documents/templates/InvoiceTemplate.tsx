@@ -121,6 +121,7 @@ export const InvoiceTemplate: React.FC<Props> = ({ language, data }) => {
       {/* Footer Notes */}
       <div className="mt-auto text-xs text-gray-500 whitespace-pre-line text-center border-t border-gray-200 pt-4">
         {data.legalNotes}
+      </div>
             </div>
           </td>
         </tr>

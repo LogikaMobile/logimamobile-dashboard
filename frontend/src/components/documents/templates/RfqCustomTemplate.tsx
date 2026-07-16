@@ -100,6 +100,7 @@ export const RfqCustomTemplate: React.FC<Props> = ({ language, data }) => {
           <h2 className="text-lg font-bold text-gray-900 mb-2 uppercase border-b border-gray-200 pb-1">{dict.RFQ_CUSTOM_TERMS}</h2>
           <p className="whitespace-pre-line text-gray-700">{data.billingTerms}</p>
         </section>
+      </div>
             </div>
           </td>
         </tr>

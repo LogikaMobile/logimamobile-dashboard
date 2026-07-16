@@ -83,6 +83,7 @@ export const RfqLmaasTemplate: React.FC<Props> = ({ language, data }) => {
             {data.exitClause}
           </div>
         </section>
+      </div>
             </div>
           </td>
         </tr>
