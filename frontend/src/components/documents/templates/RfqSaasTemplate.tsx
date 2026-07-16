@@ -39,53 +39,74 @@ export const RfqSaasTemplate: React.FC<Props> = ({ language, data }) => {
       <table className="w-full border-collapse border-spacing-0">
         <thead className="hidden print:table-header-group">
           <tr>
-            <td className="p-0 border-none align-top">
-              <div className="opacity-0 pointer-events-none">{header}</div>
+            <td className="p-0 border-none">
+              <div style={{ height: '215px' }}></div>
             </td>
           </tr>
         </thead>
         <tbody className="table-row-group">
-          <tr>
+          <tr className="break-inside-avoid">
             <td className="p-0 border-none align-top">
-            <div className="font-sans text-sm text-gray-800 px-[20mm] pb-[20mm]">
+              <div className="font-sans text-sm text-gray-800 px-[20mm]">
+                <section className="mb-8">
+                  <h2 className="text-lg font-bold text-gray-900 mb-2 uppercase border-b border-gray-200 pb-1">{dict.RFQ_SAAS_OBJ}</h2>
+                  <p className="whitespace-pre-line text-gray-700">{data.objective}</p>
+                </section>
+              </div>
+            </td>
+          </tr>
 
-      <div className="space-y-8">
-        <section>
-          <h2 className="text-lg font-bold text-gray-900 mb-2 uppercase border-b border-gray-200 pb-1">{dict.RFQ_SAAS_OBJ}</h2>
-          <p className="whitespace-pre-line text-gray-700">{data.objective}</p>
-        </section>
+          <tr className="break-inside-avoid">
+            <td className="p-0 border-none align-top">
+              <div className="font-sans text-sm text-gray-800 px-[20mm]">
+                <section className="mb-8">
+                  <h2 className="text-lg font-bold text-gray-900 mb-2 uppercase border-b border-gray-200 pb-1">{dict.RFQ_SAAS_SETUP}</h2>
+                  <div className="bg-gray-50 p-4 border-l-4 border-gray-400">
+                    <p className="text-2xl font-mono font-bold">{data.setupFee} {data.currency}</p>
+                    <p className="text-xs text-gray-500 mt-1">Pago único por implementación inicial y configuración.</p>
+                  </div>
+                </section>
+              </div>
+            </td>
+          </tr>
 
-        <section>
-          <h2 className="text-lg font-bold text-gray-900 mb-2 uppercase border-b border-gray-200 pb-1">{dict.RFQ_SAAS_SETUP}</h2>
-          <div className="bg-gray-50 p-4 border-l-4 border-gray-400">
-            <p className="text-2xl font-mono font-bold">{data.setupFee} {data.currency}</p>
-            <p className="text-xs text-gray-500 mt-1">Pago único por implementación inicial y configuración.</p>
-          </div>
-        </section>
+          <tr className="break-inside-avoid">
+            <td className="p-0 border-none align-top">
+              <div className="font-sans text-sm text-gray-800 px-[20mm]">
+                <section className="mb-8">
+                  <h2 className="text-lg font-bold text-gray-900 mb-2 uppercase border-b border-gray-200 pb-1">{dict.RFQ_SAAS_LICENSE}</h2>
+                  <div className="bg-blue-50 p-4 border border-blue-200 rounded-lg">
+                    <p className="text-2xl font-mono font-bold text-logika-blue mb-4">{data.licensePrice} {data.currency} <span className="text-sm font-sans text-gray-600 font-normal">/ mes</span></p>
+                    <p className="whitespace-pre-line text-gray-700 text-sm">{data.licenseDetails}</p>
+                  </div>
+                </section>
+              </div>
+            </td>
+          </tr>
 
-        <section>
-          <h2 className="text-lg font-bold text-gray-900 mb-2 uppercase border-b border-gray-200 pb-1">{dict.RFQ_SAAS_LICENSE}</h2>
-          <div className="bg-blue-50 p-4 border border-blue-200 rounded-lg">
-            <p className="text-2xl font-mono font-bold text-logika-blue mb-4">{data.licensePrice} {data.currency} <span className="text-sm font-sans text-gray-600 font-normal">/ mes</span></p>
-            <p className="whitespace-pre-line text-gray-700 text-sm">{data.licenseDetails}</p>
-          </div>
-        </section>
+          <tr className="break-inside-avoid">
+            <td className="p-0 border-none align-top">
+              <div className="font-sans text-sm text-gray-800 px-[20mm]">
+                <section className="mb-8">
+                  <h2 className="text-lg font-bold text-gray-900 mb-2 uppercase border-b border-gray-200 pb-1">{dict.RFQ_SAAS_TECH}</h2>
+                  <p className="whitespace-pre-line text-gray-700">{data.techConsiderations}</p>
+                </section>
+              </div>
+            </td>
+          </tr>
 
-        <section>
-          <h2 className="text-lg font-bold text-gray-900 mb-2 uppercase border-b border-gray-200 pb-1">{dict.RFQ_SAAS_TECH}</h2>
-          <p className="whitespace-pre-line text-gray-700">{data.techConsiderations}</p>
-        </section>
-
-        <section>
-          <h2 className="text-lg font-bold text-gray-900 mb-2 uppercase border-b border-gray-200 pb-1">{dict.RFQ_SAAS_LEGAL}</h2>
-          <p className="whitespace-pre-line text-gray-700">{data.legalDocs}</p>
-        </section>
-      </div>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+          <tr className="break-inside-avoid">
+            <td className="p-0 border-none align-top">
+              <div className="font-sans text-sm text-gray-800 px-[20mm] pb-[20mm]">
+                <section className="mb-8">
+                  <h2 className="text-lg font-bold text-gray-900 mb-2 uppercase border-b border-gray-200 pb-1">{dict.RFQ_SAAS_LEGAL}</h2>
+                  <p className="whitespace-pre-line text-gray-700">{data.legalDocs}</p>
+                </section>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </>
   );
 };

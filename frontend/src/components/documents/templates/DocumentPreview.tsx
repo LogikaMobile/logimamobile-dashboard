@@ -12,7 +12,7 @@ export const DocumentPreview = forwardRef<HTMLDivElement, DocumentPreviewProps>(
       <div className="bg-black p-8 flex justify-center w-full min-h-screen overflow-auto">
         <div 
           ref={ref} 
-          className="bg-white text-black shadow-xl relative"
+          className="bg-white text-black shadow-xl print:shadow-none print:bg-transparent relative"
           style={{
             // A4 format dimensions in mm
             width: '210mm',
