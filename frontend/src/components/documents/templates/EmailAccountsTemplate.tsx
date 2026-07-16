@@ -40,8 +40,8 @@ export const EmailAccountsTemplate: React.FC<Props> = ({ language, data }) => {
       <table className="w-full border-collapse border-spacing-0">
         <thead className="hidden print:table-header-group">
           <tr>
-            <td className="p-0 border-none align-top">
-              <div className="opacity-0 pointer-events-none">{header}</div>
+            <td className="p-0 border-none">
+              <div style={{ height: '215px' }}></div>
             </td>
           </tr>
         </thead>
