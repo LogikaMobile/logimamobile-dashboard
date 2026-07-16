@@ -17,7 +17,6 @@ export const DocumentPreview = forwardRef<HTMLDivElement, DocumentPreviewProps>(
             // A4 format dimensions in mm
             width: '210mm',
             minHeight: '297mm',
-            padding: '20mm',
             boxSizing: 'border-box',
           }}
         >

@@ -12,7 +12,7 @@ interface Props {
 
 export const DocumentHeader: React.FC<Props> = ({ title, subtitle, rightText1, rightText2, overrideLogo }) => {
   return (
-    <div className="flex justify-between items-center mb-8 bg-[#111111] text-white pt-8 px-[10mm] pb-6 -mx-[20mm] -mt-[20mm] border-b-4 border-brand-orange">
+    <div className="flex justify-between items-center mb-8 bg-[#111111] text-white pt-[20mm] px-[20mm] pb-6 border-b-4 border-brand-orange">
       {/* Left Side: Logo */}
       <div className="flex-1 flex justify-start">
         <Image src={overrideLogo || Logo} alt="LogikaMobile Logo" width={overrideLogo ? 100 : 80} height={80} style={{ objectFit: 'contain' }} />

@@ -25,14 +25,24 @@ export const RfqLmaasTemplate: React.FC<Props> = ({ language, data }) => {
   const dict = t[language];
 
   return (
-    <div className="font-sans text-sm text-gray-800">
-      <DocumentHeader 
-        title={dict.RFQ_LMAAS_TITLE}
-        subtitle={data.projectName}
-        rightText1={`Para: ${data.clientName}`}
-        rightText2={data.date}
-        overrideLogo={LMaaSLogo}
-      />
+    <table className="w-full border-collapse border-spacing-0">
+      <thead className="table-header-group">
+        <tr>
+          <td className="p-0 border-none align-top">
+            <DocumentHeader 
+              title={dict.RFQ_LMAAS_TITLE}
+              subtitle={data.projectName}
+              rightText1={`Para: ${data.clientName}`}
+              rightText2={data.date}
+              overrideLogo={LMaaSLogo}
+            />
+          </td>
+        </tr>
+      </thead>
+      <tbody className="table-row-group">
+        <tr>
+          <td className="p-0 border-none align-top">
+            <div className="font-sans text-sm text-gray-800 px-[20mm] pb-[20mm]">
 
       <div className="space-y-8">
         <section>
@@ -73,7 +83,10 @@ export const RfqLmaasTemplate: React.FC<Props> = ({ language, data }) => {
             {data.exitClause}
           </div>
         </section>
-      </div>
-    </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   );
 };

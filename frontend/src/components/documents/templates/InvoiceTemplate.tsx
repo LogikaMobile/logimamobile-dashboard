@@ -40,13 +40,23 @@ export const InvoiceTemplate: React.FC<Props> = ({ language, data }) => {
   const dict = t[language];
 
   return (
-    <div className="font-sans text-sm">
-      <DocumentHeader 
-        title={data.title || dict.INVOICE_TITLE}
-        subtitle={`${dict.FOLIO}: ${data.folio || 'N/A'}`}
-        rightText1={`${dict.DATE_ISSUED}: ${data.dateIssued || ''}`}
-        rightText2={`${dict.DATE_DUE}: ${data.dateDue || ''}`}
-      />
+    <table className="w-full border-collapse border-spacing-0">
+      <thead className="table-header-group">
+        <tr>
+          <td className="p-0 border-none align-top">
+            <DocumentHeader 
+              title={data.title || dict.INVOICE_TITLE}
+              subtitle={`${dict.FOLIO}: ${data.folio || 'N/A'}`}
+              rightText1={`${dict.DATE_ISSUED}: ${data.dateIssued || ''}`}
+              rightText2={`${dict.DATE_DUE}: ${data.dateDue || ''}`}
+            />
+          </td>
+        </tr>
+      </thead>
+      <tbody className="table-row-group">
+        <tr>
+          <td className="p-0 border-none align-top">
+            <div className="font-sans text-sm px-[20mm] pb-[20mm]">
 
       {/* Entities */}
       <div className="grid grid-cols-2 gap-8 mb-12">
@@ -111,7 +121,10 @@ export const InvoiceTemplate: React.FC<Props> = ({ language, data }) => {
       {/* Footer Notes */}
       <div className="mt-auto text-xs text-gray-500 whitespace-pre-line text-center border-t border-gray-200 pt-4">
         {data.legalNotes}
-      </div>
-    </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   );
 };

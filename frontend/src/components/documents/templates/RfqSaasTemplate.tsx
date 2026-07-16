@@ -24,13 +24,23 @@ export const RfqSaasTemplate: React.FC<Props> = ({ language, data }) => {
   const dict = t[language];
 
   return (
-    <div className="font-sans text-sm text-gray-800">
-      <DocumentHeader 
-        title={dict.RFQ_SAAS_TITLE}
-        subtitle={data.projectName}
-        rightText1={`Para: ${data.clientName}`}
-        rightText2={data.date}
-      />
+    <table className="w-full border-collapse border-spacing-0">
+      <thead className="table-header-group">
+        <tr>
+          <td className="p-0 border-none align-top">
+            <DocumentHeader 
+              title={dict.RFQ_SAAS_TITLE}
+              subtitle={data.projectName}
+              rightText1={`Para: ${data.clientName}`}
+              rightText2={data.date}
+            />
+          </td>
+        </tr>
+      </thead>
+      <tbody className="table-row-group">
+        <tr>
+          <td className="p-0 border-none align-top">
+            <div className="font-sans text-sm text-gray-800 px-[20mm] pb-[20mm]">
 
       <div className="space-y-8">
         <section>
@@ -63,7 +73,10 @@ export const RfqSaasTemplate: React.FC<Props> = ({ language, data }) => {
           <h2 className="text-lg font-bold text-gray-900 mb-2 uppercase border-b border-gray-200 pb-1">{dict.RFQ_SAAS_LEGAL}</h2>
           <p className="whitespace-pre-line text-gray-700">{data.legalDocs}</p>
         </section>
-      </div>
-    </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   );
 };
